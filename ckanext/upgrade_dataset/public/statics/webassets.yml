@@ -1,9 +1,9 @@
-my-css:
+stage-css:
   output: ckanext-upgrade-dataset/%(version)s_my.css
   contents:
     - stage.css
 
-my-js:  
+stage-js:  
   output: ckanext-upgrade-dataset/%(version)s_my.js
   extra:
     preload:
@@ -13,5 +13,17 @@ my-js:
       - vendor/jquery
       - vendor/jquery.ui.core
   contents:
-    - mediawiki.js
+    - stages.js
+
+machines-js:  
+  output: ckanext-upgrade-dataset/%(version)s_my.js
+  extra:
+    preload:
+      - base/main
+      - vendor/vendor
+      - vendor/bootstrap
+      - vendor/jquery
+      - vendor/jquery.ui.core
+  contents:
+    - machines.js
   

@@ -1,0 +1,28 @@
+{% extends "package/new_resource.html" %}
+
+{% block breadcrumb_content %}
+  {{ super() }}
+  {% if pkg %}
+    <li class="active"><a href="#">{{ _('Add Machines') }}</a></li>
+  {% endif %}
+{% endblock %}
+
+{% block form %}
+    {% block stages %}        
+        {% if custom_stage %}
+            {{ h.snippet('package/snippets/stages.html', stages=custom_stage, pkg_name=pkg_dict['name']) }}
+        {% endif %}
+    {% endblock %}
+
+
+
+
+
+
+
+{% endblock %}
+
+{% block scripts %}
+  {{ super() }}
+  {% asset 'ckanext-upgrade-dataset/machines-js' %}
+{% endblock %}

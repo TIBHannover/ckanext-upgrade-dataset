@@ -24,9 +24,9 @@ class MediaWikiLinkPlugin(plugins.SingletonPlugin):
         blueprint = Blueprint(self.name, self.__module__)
         blueprint.template_folder = u'templates'
         blueprint.add_url_rule(
-            u'/upgrade_dataset/machines',
-            u'machines',
-            MediaWikiController.render_view,
+            u'/upgrade_dataset/machines_view/<id>',
+            u'machines_view',
+            MediaWikiController.machines_view,
             methods=['GET']
             )
 
