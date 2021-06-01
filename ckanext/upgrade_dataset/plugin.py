@@ -1,6 +1,7 @@
 import ckan.plugins as plugins
 import ckan.plugins.toolkit as toolkit
 from flask import Blueprint
+from ckanext.upgrade_dataset.controllers import MediaWikiController
 
 
 class MediaWikiLinkPlugin(plugins.SingletonPlugin):
@@ -22,5 +23,11 @@ class MediaWikiLinkPlugin(plugins.SingletonPlugin):
 
         blueprint = Blueprint(self.name, self.__module__)
         blueprint.template_folder = u'templates'
+        blueprint.add_url_rule(
+            u'/upgrade_dataset/machines',
+            u'machines',
+            MediaWikiController.render_view,
+            methods=['GET']
+            )
 
         return blueprint
