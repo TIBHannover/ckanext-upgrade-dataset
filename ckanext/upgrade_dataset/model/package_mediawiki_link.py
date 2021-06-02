@@ -1,13 +1,7 @@
 # encoding: utf-8
 
-import copy
 import datetime
-
 from sqlalchemy import types, Column, Table, ForeignKey, orm
-from sqlalchemy.dialects.postgresql import JSONB
-from sqlalchemy.ext.mutable import MutableDict
-
-import ckan.plugins.toolkit as tk
 from ckan.model import meta, Package, DomainObject
 
 

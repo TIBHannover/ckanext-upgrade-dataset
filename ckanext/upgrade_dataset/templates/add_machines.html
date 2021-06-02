@@ -23,6 +23,7 @@
   {% set action = h.url_for('media_wiki.save_machines', _external=True) %}
   <form id="machine-form" class="" method="post" action='{{action}}' data-module="basic-form" enctype="multipart/form-data">
       <h3>{{_('Please Select the machine for this dataset')}}:</h3>
+      <input type="hidden" name="package"  value="{{pkg_dict['name']}}">
       <br>
       {{ input_object.select('machine_link', 
           id='machines_dropdown',
@@ -45,8 +46,8 @@
       </div>
       <br>
       <div class="form-actions">
-        <button class="btn btn-default" name="previous" value="go-resource">{{ _('Previous') }}</button>
-        <button class="btn btn-primary" value="finish_machine" type="submit">{{ _('Finish') }}</button>
+        <button class="btn btn-default" name="save_btn" value="go-dataset-veiw" type="submit">{{ _('I add it later') }}</button>
+        <button class="btn btn-primary" name="save_btn" value="finish_machine" type="submit">{{ _('Add') }}</button>
       </div>      
       
   </form>
