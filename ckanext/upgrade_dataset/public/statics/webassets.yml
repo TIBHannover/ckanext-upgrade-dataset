@@ -3,6 +3,11 @@ stage-css:
   contents:
     - stage.css
 
+machines-css:
+  output: ckanext-upgrade-dataset/%(version)s_my.css
+  contents:
+    - machines.css
+
 stage-js:  
   output: ckanext-upgrade-dataset/%(version)s_my.js
   extra:

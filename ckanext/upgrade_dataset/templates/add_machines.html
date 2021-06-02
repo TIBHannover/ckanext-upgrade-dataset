@@ -1,4 +1,10 @@
 {% extends "package/new_resource.html" %}
+{% import 'macros/form.html' as input_object %}
+
+{% block styles %}
+  {{ super() }}
+  {% asset 'ckanext-upgrade-dataset/machines-css' %}
+{% endblock styles %} 
 
 {% block breadcrumb_content %}
   {{ super() }}
@@ -8,17 +14,42 @@
 {% endblock %}
 
 {% block form %}
-    {% block stages %}        
-        {% if custom_stage %}
-            {{ h.snippet('package/snippets/stages.html', stages=custom_stage, pkg_name=pkg_dict['name']) }}
-        {% endif %}
-    {% endblock %}
+  {% block stages %}        
+      {% if custom_stage %}
+          {{ h.snippet('package/snippets/stages.html', stages=custom_stage, pkg_name=pkg_dict['name']) }}
+      {% endif %}
+  {% endblock %}
 
-
-
-
-
-
+  {% set action = h.url_for('media_wiki.save_machines', _external=True) %}
+  <form id="machine-form" class="" method="post" action='{{action}}' data-module="basic-form" enctype="multipart/form-data">
+      <h3>{{_('Please Select the machine for this dataset')}}:</h3>
+      <br>
+      {{ input_object.select('machine_link', 
+          id='machines_dropdown',
+          label= _('Machines'), 
+          options=machines_list, selected='', classes=[], attrs={'class': 'form-control'}, is_required=false) 
+      }}
+      {{
+        input_object.checkbox('notFind', id='not_find', 
+          label= _('I am not able to find the machine for this dataset'), 
+          value='', checked=false, placeholder='', error="", classes=[], attrs={}, is_required=false)
+      }}
+      <div id="manual_link_box">
+          {{
+            input_object.input('machine_link_manually', 
+              id='machine_manual_link', 
+              label= _('URL for the target machine'), 
+              value='', placeholder= _('Ex: https://service.tib.eu/sfb1368/wiki/machinePage'),
+              type='text', error="", classes=[], attrs={'class': 'form-control'}, is_required=false)
+          }}
+      </div>
+      <br>
+      <div class="form-actions">
+        <button class="btn btn-default" name="previous" value="go-resource">{{ _('Previous') }}</button>
+        <button class="btn btn-primary" value="finish_machine" type="submit">{{ _('Finish') }}</button>
+      </div>      
+      
+  </form>
 
 {% endblock %}
 
