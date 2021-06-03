@@ -1,0 +1,12 @@
+{% ckan_extends %}
+
+{% block package_additional_info %}
+    <tr>
+        <th scope="row" class="dataset-label">{{ _("Machine") }}</th>
+
+        <td class="dataset-details">
+            <a href="https://service.tib.eu/sfb1368/wiki/Test2" target="_blank">{{ _("Machine2") }}</a>
+        </td>
+    </tr>
+    {{ super() }}
+{% endblock  %}
