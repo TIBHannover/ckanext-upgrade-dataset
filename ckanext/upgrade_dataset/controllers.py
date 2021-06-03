@@ -35,3 +35,8 @@ class MediaWikiController():
             return redirect(h.url_for('dataset.read', id=str(package_name) ,  _external=True))
 
         return toolkit.abort(403, "bad request")
+    
+
+    def edit_machines_view(id):
+        package = toolkit.get_action('package_show')({}, {'name_or_id': id})        
+        return render_template('edit_machines.html', pkg_dict=package)

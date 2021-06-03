@@ -35,5 +35,12 @@ class MediaWikiLinkPlugin(plugins.SingletonPlugin):
             MediaWikiController.save_machines,
             methods=['POST']
             )
+        
+        blueprint.add_url_rule(
+            u'/upgrade_dataset/edit_machines_view/<id>',
+            u'edit_machines_view',
+            MediaWikiController.edit_machines_view,
+            methods=['GET']
+            )
 
         return blueprint
