@@ -1,3 +1,15 @@
-#manual_link_box{
+.manUrl{
     display: none;
+}
+
+table {
+    width:100%;
+}
+table, th, td {
+    border: 1px solid black;
+    border-collapse: collapse;
+}
+th, td {
+    padding: 15px;
+    text-align: left;
 }
