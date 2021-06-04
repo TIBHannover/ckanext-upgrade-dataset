@@ -8,6 +8,11 @@ machines-css:
   contents:
     - machines.css
 
+machines-name-view-css:
+  output: ckanext-upgrade-dataset/%(version)s_my.css
+  contents:
+    - machine_name_view.css
+
 stage-js:  
   output: ckanext-upgrade-dataset/%(version)s_my.js
   extra:

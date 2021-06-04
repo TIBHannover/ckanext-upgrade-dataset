@@ -1,11 +1,19 @@
 {% ckan_extends %}
 
 {% block package_additional_info %}
+    {% asset 'ckanext-upgrade-dataset/machines-name-view-css' %}
     <tr>
         <th scope="row" class="dataset-label">{{ _("Machine") }}</th>
 
         <td class="dataset-details">
-            <a href="https://service.tib.eu/sfb1368/wiki/Test2" target="_blank">{{ _("Machine2") }}</a>
+            
+            <a href="https://service.tib.eu/sfb1368/wiki/Test2" target="_blank" class="machine-link">
+            <div class="machine-name-tag">{{ _("Machine2") }}</div>
+            </a>
+                        
+            <a href="https://service.tib.eu/sfb1368/wiki/Test2" target="_blank" class="machine-link">
+                <div class="machine-name-tag">{{ _("Machine3") }}</div>
+            </a>              
         </td>
     </tr>
     {{ super() }}
