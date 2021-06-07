@@ -53,3 +53,9 @@ class MediaWikiController():
     def edit_machines_view(id):
         package = toolkit.get_action('package_show')({}, {'name_or_id': id})        
         return render_template('edit_machines.html', pkg_dict=package)
+    
+    def get_machine_link(id):
+        if not toolkit.g.user: 
+            return toolkit.abort(403, "You need to authenticate before accessing this function" )
+        link = Helper.get_machine_link(id)
+        return link

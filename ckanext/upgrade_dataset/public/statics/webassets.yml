@@ -37,3 +37,15 @@ machines-js:
   contents:
     - machines.js
   
+resource-machine-js:  
+  output: ckanext-upgrade-dataset/%(version)s_my.js
+  extra:
+    preload:
+      - base/main
+      - vendor/vendor
+      - vendor/bootstrap
+      - vendor/jquery
+      - vendor/jquery.ui.core
+  contents:
+    - resource_machine.js
+  

@@ -3,7 +3,7 @@
 import datetime
 from sqlalchemy import Column, Table, ForeignKey, orm
 from sqlalchemy import types as _types
-from ckan.model import meta, Resource, DomainObject
+from ckan.model import meta, Resource, domain_object
 
 
 __all__ = [u"ResourceMediawikiLink", u"resource_mediawiki_link_table"]
@@ -19,7 +19,7 @@ resource_mediawiki_link_table = Table(
     Column(u"updated_at", _types.DateTime, default=datetime.datetime.utcnow, nullable=False),
 )
 
-class ResourceMediawikiLink(DomainObject):
+class ResourceMediawikiLink(domain_object.DomainObject):
     def __init__(self, resource_id=None, url=None, link_name=None, create_at=None, updated_at=None):
         self.resource_id = resource_id
         self.url = url
@@ -28,10 +28,14 @@ class ResourceMediawikiLink(DomainObject):
         self.updated_at = updated_at
     
     @classmethod
-    def get(cls, id):
+    def get_by_resource(cls, id, autoflush=True):
         if not id:
             return None
-        return meta.Session.query(cls).get(id)
+        query = meta.Session.query(cls).filter(cls.resource_id==id)
+        query = query.autoflush(autoflush)
+        record = query.first()
+        return record
+
     
     def get_resource(self):
         return self.resource
