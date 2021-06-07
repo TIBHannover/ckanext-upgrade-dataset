@@ -7,4 +7,5 @@
 
 .machine-link{
     text-decoration: none !important;
+    display: none;
 }

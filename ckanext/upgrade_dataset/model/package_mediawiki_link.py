@@ -52,7 +52,7 @@ meta.mapper(
     resource_mediawiki_link_table,
     properties={
         u"resource": orm.relation(
-            Resource, backref=orm.backref(u"resource_mediawiki_links", cascade=u"all, delete, delete-orphan")
+            Resource, backref=orm.backref(u"resource_mediawiki_link", cascade=u"all, delete, delete-orphan")
         )
     },
 )

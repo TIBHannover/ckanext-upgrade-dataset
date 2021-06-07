@@ -5,6 +5,7 @@ import ckan.plugins.toolkit as toolkit
 from flask import render_template, request, redirect
 import ckan.lib.helpers as h
 from ckanext.upgrade_dataset.lib import Helper
+import json
 
 
 class MediaWikiController():
@@ -58,7 +59,7 @@ class MediaWikiController():
     def get_machine_link(id):
         if not toolkit.g.user: 
             return toolkit.abort(403, "You need to authenticate before accessing this function" )
-        link = Helper.get_machine_link(id)
-        if link == false:
+        record = Helper.get_machine_link(id)
+        if record == false:
             return '0'
-        return link
+        return json.dumps([record.url, record.link_name])
