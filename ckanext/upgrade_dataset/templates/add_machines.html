@@ -37,21 +37,7 @@
               {{ input_object.select('machine_link' ~ loop.index, 
                   id='machines_dropdown' ~ loop.index,                  
                   options=machines_list, selected='', classes=[], attrs={'class': 'form-control machine_dropdown'}, is_required=false) 
-              }}
-              {{
-                input_object.checkbox('notFind' ~ loop.index, id='not_find' ~ loop.index, 
-                  label= _('Machine is not listed'), 
-                  value='', checked=false, placeholder='', error="", classes=[], attrs={'class': 'notFindCheckBox'}, is_required=false)
-              }}
-              <div id= {{ 'manual_link_box' ~ loop.index }} class="manUrl">
-                  {{
-                    input_object.input('machine_link_manually' ~ loop.index, 
-                      id='machine_manual_link' ~ loop.index, 
-                      label= _('URL for the target machine'), 
-                      value='', placeholder= _('Ex: https://service.tib.eu/sfb1368/wiki/machinePage'),
-                      type='text', error="", classes=[], attrs={'class': 'form-control'}, is_required=false)
-                  }}
-              </div>
+              }}         
             </td>
           </tr>  
         {% endfor %}
