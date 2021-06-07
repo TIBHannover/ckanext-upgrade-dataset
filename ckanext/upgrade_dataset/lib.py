@@ -28,6 +28,6 @@ class Helper():
     def get_machine_link(resource_id):
         res_object = ResourceMediawikiLink(resource_id=resource_id)
         result = res_object.get_by_resource(id=resource_id)
-        if result:
+        if result != false:
             return result.url
         return false

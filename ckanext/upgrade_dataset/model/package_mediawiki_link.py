@@ -3,6 +3,7 @@
 import datetime
 from sqlalchemy import Column, Table, ForeignKey, orm
 from sqlalchemy import types as _types
+from sqlalchemy.sql.expression import false
 from ckan.model import meta, Resource, domain_object
 
 
@@ -31,6 +32,10 @@ class ResourceMediawikiLink(domain_object.DomainObject):
     def get_by_resource(cls, id, autoflush=True):
         if not id:
             return None
+
+        exists = meta.Session.query(cls).filter(cls.resource_id==id).first() is not None
+        if not exists:
+            return false
         query = meta.Session.query(cls).filter(cls.resource_id==id)
         query = query.autoflush(autoflush)
         record = query.first()

@@ -1,5 +1,6 @@
 # encoding: utf-8
 
+from sqlalchemy.sql.expression import false
 import ckan.plugins.toolkit as toolkit
 from flask import render_template, request, redirect
 import ckan.lib.helpers as h
@@ -58,4 +59,6 @@ class MediaWikiController():
         if not toolkit.g.user: 
             return toolkit.abort(403, "You need to authenticate before accessing this function" )
         link = Helper.get_machine_link(id)
+        if link == false:
+            return '0'
         return link

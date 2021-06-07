@@ -7,7 +7,9 @@
     {% set dest_url = h.url_for('media_wiki.get_machine_link', id=resource_id, _external=True) %}
     <input type="hidden" id="get_link_url" value='{{dest_url}}'>
     
-    {{_('Machine URL')}}: <a href="#" id="machine_url_anchor"  target="_blank"> </a>
+    <div id="machine_link_box">
+        {{_('Machine URL')}}: <a href="#" id="machine_url_anchor"  target="_blank"> </a>
+    </div>    
     <br><br>
 {% endblock %}
 

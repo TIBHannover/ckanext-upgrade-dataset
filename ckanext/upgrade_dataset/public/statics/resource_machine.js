@@ -4,9 +4,14 @@ $(document).ready(function(){
         cache:false,        
         type: "GET",
         success: function(result){
-            $('#machine_url_anchor').attr('href', result);
-            $('#machine_url_anchor').text(result);
+            if(result === '0'){
+                $('#machine_link_box').hide();
+            }
+            else{
+                $('#machine_url_anchor').attr('href', result);
+                $('#machine_url_anchor').text(result);
 
+            }            
         }
     });
 
