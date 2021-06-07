@@ -2,25 +2,25 @@
 
 import datetime
 from sqlalchemy import types, Column, Table, ForeignKey, orm
-from ckan.model import meta, Package, DomainObject
+from ckan.model import meta, Resource, DomainObject
 
 
-__all__ = [u"PackageMediawikiLink", u"package_mediawiki_link_table"]
+__all__ = [u"ResourceMediawikiLink", u"resource_mediawiki_link_table"]
 
-package_mediawiki_link_table = Table(
-    u"package_mediawiki_link",
+resource_mediawiki_link_table = Table(
+    u"resource_mediawiki_link",
     meta.metadata,
     Column(u"id", types.Integer, primary_key=True, nullable=False, default=types.make_uuid),
-    Column(u"package_name", types.UnicodeText, ForeignKey(u"package.name"), nullable=False),
+    Column(u"resource_id", types.UnicodeText, ForeignKey(u"resource.id"), nullable=False),
     Column(u"url", types.UnicodeText, nullable=False),
     Column(u"link_name", types.UnicodeText),
     Column(u"create_at", types.DateTime, default=datetime.datetime.utcnow, nullable=False),
     Column(u"updated_at", types.DateTime, default=datetime.datetime.utcnow, nullable=False),
 )
 
-class PackageMediawikiLink(DomainObject):
-    def __init__(self, package_name=None):
-        self.package_name = package_name
+class ResourceMediawikiLink(DomainObject):
+    def __init__(self, resource_id=None):
+        self.resource_id = resource_id
     
     @classmethod
     def get(cls, id):
@@ -28,17 +28,17 @@ class PackageMediawikiLink(DomainObject):
             return None
         return meta.Session.query(cls).get(id)
     
-    def get_package(self):
-        return [self.package]
+    def get_resource(self):
+        return self.resource
 
 
 
 meta.mapper(
-    PackageMediawikiLink,
-    package_mediawiki_link_table,
+    ResourceMediawikiLink,
+    resource_mediawiki_link_table,
     properties={
-        u"package": orm.relation(
-            Package, backref=orm.backref(u"package_mediawiki_links", cascade=u"all, delete, delete-orphan")
+        u"resource": orm.relation(
+            Resource, backref=orm.backref(u"resource_mediawiki_links", cascade=u"all, delete, delete-orphan")
         )
     },
 )
