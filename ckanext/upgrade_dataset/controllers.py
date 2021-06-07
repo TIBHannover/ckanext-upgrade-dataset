@@ -21,13 +21,9 @@ class MediaWikiController():
     
     def save_machines():
         package_name = request.form.get('package')
-        is_manually = request.form.get('notFind')
         link = request.form.get('machine_link')
         action = request.form.get('save_btn')
-        if is_manually != None :
-            link = request.form.get('machine_link_manually')
-        
-        if action == 'go-dataset-veiw':
+        if action == 'go-dataset-veiw': # I will add it later button
             return redirect(h.url_for('dataset.read', id=str(package_name) ,  _external=True)) 
         
         if action == 'finish_machine':
