@@ -38,7 +38,7 @@ class MediaWikiController():
         
         if action == 'finish_machine':
             result = Helper.add_machine_links(request, resources_len)
-            if result:
+            if result != false:
                 return redirect(h.url_for('dataset.read', id=str(package_name) ,  _external=True))    
 
             return toolkit.abort(500, "Server issue")    
@@ -59,6 +59,27 @@ class MediaWikiController():
             resource_machine_data.append(temp)
 
         return render_template('edit_machines.html', pkg_dict=package, machines_list=machines, resource_data=resource_machine_data)
+    
+
+    def edit_save():
+        if not toolkit.g.user: 
+            return toolkit.abort(403, "You need to authenticate before accessing this function" )
+        
+        package_name = request.form.get('package')
+        resources_len = int(request.form.get('resources_length'))
+        action = request.form.get('save_btn')
+        if action == 'go-dataset-veiw': # cancel button
+            return redirect(h.url_for('dataset.read', id=str(package_name) ,  _external=True)) 
+        
+        if action == 'update_machine':
+            result = Helper.update_resource_machine(request, resources_len)
+            if result != false:
+                return redirect(h.url_for('dataset.read', id=str(package_name) ,  _external=True))    
+
+            return toolkit.abort(500, "Server issue")    
+
+        return toolkit.abort(403, "bad request")
+    
     
 
     def get_machine_link(id):

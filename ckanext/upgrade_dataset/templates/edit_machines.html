@@ -8,9 +8,10 @@
 
 
 {% block primary_content_inner %}
-    {% set action = h.url_for('media_wiki.save_machines', _external=True) %}
+    {% set action = h.url_for('media_wiki.edit_save', _external=True) %}
     <form id="machine-form" class="" method="post" action='{{action}}' data-module="basic-form" enctype="multipart/form-data">        
         <input type="hidden" name="package"  value="{{pkg_dict['name']}}">
+        <input type="hidden" name="resources_length" value='{{resource_data|length}}'>
         
         <table>
             <tr>
@@ -34,7 +35,7 @@
         <br><br>
         <div class="form-actions">
             <button class="btn btn-default" name="save_btn" value="go-dataset-veiw" type="submit">{{ _('Cancel') }}</button>
-            <button class="btn btn-primary" name="save_btn" value="finish_machine" type="submit">{{ _('Edit') }}</button>
+            <button class="btn btn-primary" name="save_btn" value="update_machine" type="submit">{{ _('Edit') }}</button>
         </div>      
         
     </form>
