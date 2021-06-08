@@ -6,17 +6,17 @@ $(document).ready(function(){
 
 });
 
-function get_resource_link(target, url){
+function get_resource_link(target, url){    
     $.ajax({
         url: url,
         cache:false,   
         dataType: 'json',     
         type: "GET",
-        success: function(result){
-            if(result === '0'){
-                //$('#machine_link_box').hide();
+        success: function(result){            
+            if(result == '0'){                
+                $(target).find('.machine-name-tag').css('visibility', 'hidden');
             }
-            else{
+            else{                
                 $(target).attr('href', result[0]);
                 $(target).find('.machine-name-tag').text(result[1]);
                 $(target).show();
