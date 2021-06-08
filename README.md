@@ -2,11 +2,11 @@
 
 This CKAN extension includes plugin(s) that aim to extends the functionalities related to dataset (package) in CKAN. 
 
-**Included plugi(s)**:
+**Included plugin(s)**:
 
 *media_wiki* : 
 
-This plugin  anles users to link machines on semantic media wiki to resources/datasets in ckan.
+This plugin  ables users to link machines on semantic media wiki to resources/datasets in ckan.
 
 
 
