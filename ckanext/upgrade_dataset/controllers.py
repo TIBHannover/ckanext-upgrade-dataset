@@ -86,6 +86,6 @@ class MediaWikiController():
         if not toolkit.g.user: 
             return toolkit.abort(403, "You need to authenticate before accessing this function" )
         record = Helper.get_machine_link(id)
-        if record == false:
+        if record == false or record.url == '0':
             return '0'
         return json.dumps([record.url, record.link_name])
