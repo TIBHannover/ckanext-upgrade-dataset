@@ -8,6 +8,11 @@ machines-css:
   contents:
     - machines.css
 
+edit-machines-css:
+  output: ckanext-upgrade-dataset/%(version)s_my.css
+  contents:
+    - edit_machine.css
+
 machines-name-view-css:
   output: ckanext-upgrade-dataset/%(version)s_my.css
   contents:
@@ -60,4 +65,16 @@ dataset-machines-js:
       - vendor/jquery.ui.core
   contents:
     - dataset_machines.js
+
+edit-machines-js:  
+  output: ckanext-upgrade-dataset/%(version)s_my.js
+  extra:
+    preload:
+      - base/main
+      - vendor/vendor
+      - vendor/bootstrap
+      - vendor/jquery
+      - vendor/jquery.ui.core
+  contents:
+    - edit_machine.js
   

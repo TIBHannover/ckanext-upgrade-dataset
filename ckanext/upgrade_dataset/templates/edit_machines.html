@@ -1,8 +1,48 @@
 {% extends "package/edit_base.html" %}
+{% import 'macros/form.html' as input_object %}
+
+{% block styles %}
+  {{ super() }}
+  {% asset 'ckanext-upgrade-dataset/edit-machines-css' %}
+{% endblock styles %}
 
 
 {% block primary_content_inner %}
-    <h3>Here you can edit the machine related to this dataset</h3>
+    {% set action = h.url_for('media_wiki.save_machines', _external=True) %}
+    <form id="machine-form" class="" method="post" action='{{action}}' data-module="basic-form" enctype="multipart/form-data">        
+        <input type="hidden" name="package"  value="{{pkg_dict['name']}}">
+        
+        <table>
+            <tr>
+                <th>{{_('Resource')}}</th>
+                <th>{{_('Machine')}}</th>
+            </tr>    
+            {% for res in pkg_dict['resources'] %}          
+            <tr>
+                <td>{{res.name}}</td>
+                <td>
+                {{ input_object.select('machine_link' ~ loop.index, 
+                    id='machines_dropdown' ~ loop.index,                  
+                    options=[], selected='', classes=[], attrs={'class': 'form-control machine_dropdown'}, is_required=false) 
+                }} 
+                <input type="hidden"  name={{ 'resource_' ~ loop.index }} value='{{res.id}}'>
+                <input type="hidden"  name={{ 'machine_name_' ~ loop.index }} id={{ 'machine_name_' ~ loop.index }} >        
+                </td>
+            </tr>  
+            {% endfor %}
+        </table>
+        <br><br>
+        <div class="form-actions">
+            <button class="btn btn-default" name="save_btn" value="go-dataset-veiw" type="submit">{{ _('Cancel') }}</button>
+            <button class="btn btn-primary" name="save_btn" value="finish_machine" type="submit">{{ _('Edit') }}</button>
+        </div>      
+        
+    </form>
+
+
 {% endblock %}
 
-
+{% block scripts %}
+  {{ super() }}
+  {% asset 'ckanext-upgrade-dataset/edit-machines-js' %}
+{% endblock %}
