@@ -31,3 +31,18 @@ class Helper():
         if result != false:
             return result
         return false
+    
+
+    def get_machines_list():
+        base_link = "https://service.tib.eu/sfb1368/wiki/"
+        machines_dict = [
+            {'value': '0', 'text':'Not selected'},
+            {'value': base_link + 'Test1', 'text':'Machine1'},
+            {'value': base_link + 'Test2', 'text':'Machine2'},
+            {'value': base_link + 'Test3', 'text':'Machine3'}
+        ]
+
+        return machines_dict
+
+
+

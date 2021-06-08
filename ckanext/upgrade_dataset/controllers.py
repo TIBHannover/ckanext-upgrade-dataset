@@ -13,14 +13,8 @@ class MediaWikiController():
     def machines_view(id):
         package = toolkit.get_action('package_show')({}, {'name_or_id': id})
         stages = ['complete', 'complete', 'active']
-        test_link = "https://service.tib.eu/sfb1368/wiki/Test2"
-        machines_dict = [
-            {'value': '0', 'text':'Not selected'},
-            {'value': test_link, 'text':'Machine1'},
-            {'value': test_link, 'text':'Machine2'},
-            {'value': test_link, 'text':'Machine3'}
-        ]
-        return render_template('add_machines.html', pkg_dict=package, custom_stage=stages, machines_list=machines_dict)
+        machines = Helper.get_machines_list()
+        return render_template('add_machines.html', pkg_dict=package, custom_stage=stages, machines_list=machines)
     
     def save_machines():
         if not toolkit.g.user: 
@@ -54,8 +48,19 @@ class MediaWikiController():
 
     def edit_machines_view(id):
         package = toolkit.get_action('package_show')({}, {'name_or_id': id})        
-        return render_template('edit_machines.html', pkg_dict=package)
+        machines = Helper.get_machines_list()
+        resource_machine_data = []
+        for resource in package['resources']:
+            temp = {}
+            temp['name'] = resource['name']            
+            temp['id'] = resource['id']
+            record = Helper.get_machine_link(resource['id'])
+            temp['machine'] =  record.url if record != false else '0'
+            resource_machine_data.append(temp)
+
+        return render_template('edit_machines.html', pkg_dict=package, machines_list=machines, resource_data=resource_machine_data)
     
+
     def get_machine_link(id):
         if not toolkit.g.user: 
             return toolkit.abort(403, "You need to authenticate before accessing this function" )
