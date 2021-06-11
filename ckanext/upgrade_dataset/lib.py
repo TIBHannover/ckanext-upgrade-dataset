@@ -3,7 +3,11 @@
 from sqlalchemy.sql.expression import false, null, true
 from ckanext.upgrade_dataset.model import ResourceMediawikiLink
 from datetime import datetime as _time
+import ckan.plugins.toolkit as toolkit
+from ckanext.upgrade_dataset.api import API
+from urllib import parse
 
+SMW1368_BASE_url = "https://service.tib.eu/sfb1368/wiki/"
 
 class Helper():
 
@@ -62,15 +66,35 @@ class Helper():
     
 
     def get_machines_list():
-        base_link = "https://service.tib.eu/sfb1368/wiki/"
-        machines_dict = [
-            {'value': '0', 'text':'Not selected'},
-            {'value': base_link + 'Test1', 'text':'Machine1'},
-            {'value': base_link + 'Test2', 'text':'Machine2'},
-            {'value': base_link + 'Test3', 'text':'Machine3'}
-        ]
-
-        return machines_dict
+        machines_list = []
+        username = None
+        password = None
+        query = "[[Category:Equipment]]|?hasManufacturer|?hasModel"  # all Equipments (machines and tools)
+        try:
+            credentials = open('/etc/ckan/default/credentials/smw1368.txt', 'r').read()
+            credentials = credentials.split('\n')
+            username = credentials[0].split('=')[1]
+            password = credentials[1].split('=')[1]
+           
+        except:
+            return []
+        
+        api_call = API(username=username, password=password, query=query)
+        results = api_call.pipeline()
+        if results and len(results) > 0:
+            temp = {}
+            temp['value'] = '0'
+            temp['text'] = 'Not selected'
+            machines_list.append(temp)
+            for machine in results:
+                temp = {}
+                temp['value'] = SMW1368_BASE_url + parse.quote(machine['page'])
+                temp['text'] = machine['page']
+                machines_list.append(temp)
+                        
+            return machines_list
+        
+        return []
 
 
 
