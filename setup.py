@@ -85,6 +85,7 @@ setup(
     entry_points='''
         [ckan.plugins]
         media_wiki=ckanext.upgrade_dataset.plugin:MediaWikiLinkPlugin
+        group_ownership=ckanext.upgrade_dataset.plugin2:GroupOwnershipPlugin
 
         [babel.extractors]
         ckan = ckan.lib.extract:extract_ckan

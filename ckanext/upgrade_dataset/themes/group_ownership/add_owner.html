@@ -1,0 +1,50 @@
+{% extends "package/new_resource.html" %}
+{% import 'macros/form.html' as input_object %}
+
+{% block styles %}
+  {{ super() }}
+  
+{% endblock styles %} 
+
+{% block breadcrumb_content %}
+  {{ super() }}
+  {% if pkg %}
+    <li class="active"><a href="#">{{ _('Set Ownership') }}</a></li>
+  {% endif %}
+{% endblock %}
+
+{% block form %}
+  {% block stages %}        
+      {% if custom_stage %}
+          {{ h.snippet('package/snippets/stages.html', stages=custom_stage, pkg_name=pkg_dict['name']) }}
+      {% endif %}
+  {% endblock %}
+
+  {% set action = h.url_for('group_ownership.save_ownership', _external=True) %}
+  <form id="ownership-form" class="" method="post" action='{{action}}' data-module="basic-form" enctype="multipart/form-data">
+    <input type="hidden" name="package"  value="{{pkg_dict['name']}}">
+    {{ input_object.select('owner_org', 
+                id='org_dropdown', 
+                label = "Organization",                 
+                options=org_list, selected='0', classes=[], attrs={'class': 'form-control machine_dropdown'}, is_required=false) 
+    }} 
+    <br>
+    {{ input_object.select('owner_group', 
+                id='groups_dropdown', 
+                label = "Group",                 
+                options=group_list, selected='0', classes=[], attrs={'class': 'form-control machine_dropdown'}, is_required=false) 
+    }} 
+
+    <div class="form-actions">        
+        <button class="btn btn-primary" name="save_btn" value="finish_ownership" type="submit">{{ _('Next') }}</button>
+    </div> 
+
+  </form>
+ 
+
+{% endblock %}
+
+{% block scripts %}
+  {{ super() }}
+  
+{% endblock %}
