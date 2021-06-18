@@ -23,20 +23,23 @@
   {% set action = h.url_for('group_ownership.save_ownership', _external=True) %}
   <form id="ownership-form" class="" method="post" action='{{action}}' data-module="basic-form" enctype="multipart/form-data">
     <input type="hidden" name="package"  value="{{pkg_dict['name']}}">
+    <div class="alert alert-danger" id="org_group_error">
+      <p>You have to set the Organization and Group for your dataset.</p>
+    </div>
     {{ input_object.select('owner_org', 
                 id='org_dropdown', 
-                label = "Owner Organization",                 
+                label = "Owner Organization * ",                 
                 options=org_list, selected='0', classes=[], attrs={'class': 'org_dropdown'}, is_required=false) 
     }} 
     <br>
     {{ input_object.select('owner_group', 
                 id='groups_dropdown', 
-                label = "Group",                 
+                label = "Group * ",                 
                 options=group_list, selected='0', classes=[], attrs={'class': 'group_dropdown'}, is_required=false) 
     }} 
     <br>
     <div class="form-actions">        
-        <button class="btn btn-primary" name="save_btn" value="finish_ownership" type="submit">{{ _('Next') }}</button>
+        <button class="btn btn-primary"  id="next-btn" name="save_btn" value="finish_ownership" type="submit">{{ _('Next') }}</button>
     </div> 
 
   </form>

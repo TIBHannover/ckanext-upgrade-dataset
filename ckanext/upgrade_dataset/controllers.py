@@ -133,6 +133,6 @@ class GroupOwnershipController():
 
                 return redirect(h.url_for('media_wiki.machines_view', id=str(package_name) ,  _external=True))    
 
-            return toolkit.abort(500, "Server issue")    
+            return toolkit.abort(403, "bad request")    
 
         return toolkit.abort(403, "bad request")
