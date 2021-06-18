@@ -1,5 +1,6 @@
 $(document).ready(function(){
-    $('.machine_dropdown').parent().parent().find('label').hide(); 
+    $('.machine_dropdown').parent().parent().find('label').hide();     
+    $('.machine_dropdown').select2();
     $('.machine_dropdown').change(function(){
         let id = $(this).attr('id');
         id = id[id.length - 1];

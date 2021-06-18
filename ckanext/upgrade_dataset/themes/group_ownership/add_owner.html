@@ -3,7 +3,7 @@
 
 {% block styles %}
   {{ super() }}
-  
+  {% asset 'ckanext-upgrade-dataset-group-ownership/ownership-css' %}
 {% endblock styles %} 
 
 {% block breadcrumb_content %}
@@ -25,16 +25,16 @@
     <input type="hidden" name="package"  value="{{pkg_dict['name']}}">
     {{ input_object.select('owner_org', 
                 id='org_dropdown', 
-                label = "Organization",                 
-                options=org_list, selected='0', classes=[], attrs={'class': 'form-control machine_dropdown'}, is_required=false) 
+                label = "Owner Organization",                 
+                options=org_list, selected='0', classes=[], attrs={'class': 'org_dropdown'}, is_required=false) 
     }} 
     <br>
     {{ input_object.select('owner_group', 
                 id='groups_dropdown', 
                 label = "Group",                 
-                options=group_list, selected='0', classes=[], attrs={'class': 'form-control machine_dropdown'}, is_required=false) 
+                options=group_list, selected='0', classes=[], attrs={'class': 'group_dropdown'}, is_required=false) 
     }} 
-
+    <br>
     <div class="form-actions">        
         <button class="btn btn-primary" name="save_btn" value="finish_ownership" type="submit">{{ _('Next') }}</button>
     </div> 
@@ -46,5 +46,5 @@
 
 {% block scripts %}
   {{ super() }}
-  
+  {% asset 'ckanext-upgrade-dataset-group-ownership/ownership-js' %}
 {% endblock %}

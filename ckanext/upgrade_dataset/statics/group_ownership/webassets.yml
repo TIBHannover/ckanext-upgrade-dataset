@@ -3,6 +3,11 @@ stage-css:
   contents:
     - stages.css
 
+ownership-css:
+  output: ckanext-upgrade-dataset/%(version)s_my.css
+  contents:
+    - ownership.css
+
 stage-js:  
   output: ckanext-upgrade-dataset/%(version)s_my.js
   extra:
@@ -14,3 +19,16 @@ stage-js:
       - vendor/jquery.ui.core
   contents:
     - stages.js
+
+ownership-js:  
+  output: ckanext-upgrade-dataset/%(version)s_my.js
+  extra:
+    preload:
+      - base/main
+      - vendor/vendor
+      - vendor/bootstrap
+      - vendor/jquery
+      - vendor/jquery.ui.core
+      - vendor/select2
+  contents:
+    - ownership.js
