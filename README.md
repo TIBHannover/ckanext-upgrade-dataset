@@ -4,9 +4,10 @@ This CKAN extension includes plugin(s) that aim to extends the functionalities r
 
 **Included plugin(s)**:
 
-*media_wiki* : 
-
-This plugin  ables users to link machines on semantic media wiki to resources/datasets in ckan.
+| Plugin    | Description   |
+| --------------- | ------------- |
+|  **media_wiki** | This plugin  ables users to link machines on semantic media wiki to resources/datasets in ckan.    |
+| **group_ownership** | The plugin adds an extra step for adding the dataset to a group in ckan and set the owner organization while creating a dataset.           |
 
 
 
@@ -37,11 +38,11 @@ To install ckanext-upgrade-dataset:
         pip install -e .
         pip install -r requirements.txt
 
-3. Add `media_wiki` to the `ckan.plugins` setting in your CKAN
+3. Add `media_wiki` and `group_ownership` to the `ckan.plugins` setting in your CKAN
    config file (by default the config file is located at
    `/etc/ckan/default/ckan.ini`).
 
-4. Upgrade the CKAN database to add the plugin table:
+4. (Only for `media_wiki`) Upgrade the CKAN database to add the plugin table:
 
         ckan -c /etc/ckan/default/ckan.ini db upgrade -p media_wiki
 
