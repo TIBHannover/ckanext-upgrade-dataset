@@ -1,53 +1,69 @@
-"""
-Tests for plugin.py.
+# encoding: utf-8
+'''Tests for the ckanext.upgrade_dataset extension.
 
-Tests are written using the pytest library (https://docs.pytest.org), and you
-should read the testing guidelines in the CKAN docs:
-https://docs.ckan.org/en/2.9/contributing/testing.html
+'''
 
-To write tests for your extension you should install the pytest-ckan package:
+import pytest
+import ckan.tests.factories as factories
+import ckan.lib.helpers as h
+import ckan.model as model
+import ckan.lib.create_test_data as ctd
+from ckanext.upgrade_dataset.api import API
+from os import path
 
-    pip install pytest-ckan
+@pytest.mark.usefixtures('with_plugins', 'with_request_context')
+class TestMediaWiki(object):
 
-This will allow you to use CKAN specific fixtures on your tests.
-
-For instance, if your test involves database access you can use `clean_db` to
-reset the database:
-
-    import pytest
-
-    from ckan.tests import factories
-
-    @pytest.mark.usefixtures("clean_db")
-    def test_some_action():
-
-        dataset = factories.Dataset()
-
-        # ...
-
-For functional tests that involve requests to the application, you can use the
-`app` fixture:
-
-    from ckan.plugins import toolkit
-
-    def test_some_endpoint(app):
-
-        url = toolkit.url_for('myblueprint.some_endpoint')
-
-        response = app.get(url)
-
-        assert response.status_code == 200
+    username = None
+    password = None
+    query = "[[Category:Equipment]]|?hasManufacturer|?hasModel"  # all Equipments (machines and tools)
 
 
-To temporary patch the CKAN configuration for the duration of a test you can use:
+    def test_APIcredential_exist(self):
+        '''
+            The api needs username and password which has to be 
+            in /etc/ckan/default/credentials/smw1368.txt
+        '''
+        assert path.isdir('/etc/ckan/default/credentials/') == True  ## the directory exists
+        assert path.isfile('/etc/ckan/default/credentials/smw1368.txt') == True  ## the file exists
+        try:
+            credentials = open('/etc/ckan/default/credentials/smw1368.txt', 'r').read()
+            credentials = credentials.split('\n')
+            self.username = credentials[0].split('=')[1]
+            self.password = credentials[1].split('=')[1]
+           
+        except:
+            print("The credential file structure is wrong.")
+            assert False
+        
+        assert True
+    
 
-    import pytest
+    def test_media_wiki_API_call(self):
+        '''
+            Test the mediaWiki API call 
+        '''
 
-    @pytest.mark.ckan_config("ckanext.myext.some_key", "some_value")
-    def test_some_action():
-        pass
-"""
-import ckanext.upgrade_dataset.plugin as plugin
+        try:
+            credentials = open('/etc/ckan/default/credentials/smw1368.txt', 'r').read()
+            credentials = credentials.split('\n')
+            self.username = credentials[0].split('=')[1]
+            self.password = credentials[1].split('=')[1]
+           
+        except:
+            print("The credentials do not exist.")
+            assert False
+        
+        try:
+            api_call = API(username=self.username, password=self.password, query=self.query)
+            results = api_call.pipeline()
+        except:
+            print("API call failed.")
+            assert False
+        
+        if not results or len(results) == 0:
+            print("API returns nothing.")
+            assert False
 
-def test_plugin():
-    pass
+        assert True
+
