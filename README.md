@@ -68,6 +68,6 @@ do:
 
 To run the tests, do:
 
-    pytest --ckan-ini=test.ini
+    pytest --ckan-ini=test.ini  --disable-pytest-warnings  ckanext/upgrade_dataset/tests/
 
 
