@@ -25,7 +25,10 @@
                 {{ input_object.select('machine_link' ~ loop.index, 
                     id='machines_dropdown' ~ loop.index,                  
                     options=machines_list, selected=res['machine'], classes=[], attrs={'class': 'machine_dropdown'}, is_required=false) 
-                }} 
+                }}
+                <a href="https://service.tib.eu/sfb1368/wiki/Equipment" target='_blank'>
+                    {{_('Add a new Equipment')}}
+                </a> 
                 <input type="hidden"  name={{ 'resource_' ~ loop.index }} value='{{res["id"]}}'>
                 <input type="hidden"  name={{ 'machine_name_' ~ loop.index }} id={{ 'machine_name_' ~ loop.index }} >        
                 </td>
