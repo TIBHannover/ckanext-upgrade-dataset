@@ -11,7 +11,7 @@ import ckan.lib.create_test_data as ctd
 from ckanext.upgrade_dataset.api import API
 from os import path
 
-@pytest.mark.usefixtures('with_plugins', 'with_request_context')
+@pytest.mark.usefixtures('clean_db','with_plugins', 'with_request_context')
 class TestMediaWiki(object):
 
     username = None

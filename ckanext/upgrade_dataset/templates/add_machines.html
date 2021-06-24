@@ -23,6 +23,10 @@
   {% set action = h.url_for('media_wiki.save_machines', _external=True) %}
   <form id="machine-form" class="" method="post" action='{{action}}' data-module="basic-form" enctype="multipart/form-data">
       <h3>{{_('Please Select the machine(s) for this dataset')}}:</h3>
+      <p>
+        {{_('If the Equipment is not listed for a data resource, you can add it via the provided link. Please refresh this page 
+        if you add a new Equipment.')}}
+      </p>
       <input type="hidden" name="package"  value="{{pkg_dict['name']}}">
       
       <table>
@@ -38,6 +42,9 @@
                   id='machines_dropdown' ~ loop.index,                  
                   options=machines_list, selected='', classes=[], attrs={'class': 'machine_dropdown'}, is_required=false) 
               }} 
+              <a href="https://service.tib.eu/sfb1368/wiki/Equipment" target='_blank'>
+                {{_('Add a new Equipment')}}
+              </a>
               <input type="hidden"  name={{ 'resource_' ~ loop.index }} value='{{res.id}}'>
               <input type="hidden"  name={{ 'machine_name_' ~ loop.index }} id={{ 'machine_name_' ~ loop.index }} >        
             </td>
