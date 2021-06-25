@@ -13,8 +13,13 @@ class MediaWikiController():
     def machines_view(id):
         package = toolkit.get_action('package_show')({}, {'name_or_id': id})
         stages = ['complete', 'complete','complete', 'active']
-        machines = Helper.get_machines_list()
-        return render_template('add_machines.html', pkg_dict=package, custom_stage=stages, machines_list=machines)
+        machines, machine_imageUrl = Helper.get_machines_list()
+        return render_template('add_machines.html', 
+            pkg_dict=package, 
+            custom_stage=stages, 
+            machines_list=machines,
+            machine_imageUrl=machine_imageUrl
+            )
     
     def save_machines():
         if not toolkit.g.user: 
@@ -48,7 +53,7 @@ class MediaWikiController():
 
     def edit_machines_view(id):
         package = toolkit.get_action('package_show')({}, {'name_or_id': id})        
-        machines = Helper.get_machines_list()
+        machines, machine_imageUrl = Helper.get_machines_list()
         resource_machine_data = []
         for resource in package['resources']:
             temp = {}
@@ -58,7 +63,12 @@ class MediaWikiController():
             temp['machine'] =  record.url if record != false else '0'
             resource_machine_data.append(temp)
 
-        return render_template('edit_machines.html', pkg_dict=package, machines_list=machines, resource_data=resource_machine_data)
+        return render_template('edit_machines.html', 
+            pkg_dict=package, 
+            machines_list=machines, 
+            resource_data=resource_machine_data,
+            machine_imageUrl=machine_imageUrl
+            )
     
 
     def edit_save():

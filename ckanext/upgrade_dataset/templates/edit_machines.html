@@ -42,7 +42,10 @@
         </div>      
         
     </form>
-
+    {% snippet 'snippets/machine_image.html' %}
+    {% for machine in machine_imageUrl %}
+                <div class="machine_url_div" id='{{machine.machine}}'>{{machine.image}}</div>
+    {% endfor %}
 
 {% endblock %}
 

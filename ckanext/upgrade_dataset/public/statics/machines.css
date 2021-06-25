@@ -16,3 +16,7 @@ th, td {
 .machine_dropdown{
     width: 100%;
 }
+
+.machine_url_div{
+    display: none;
+}

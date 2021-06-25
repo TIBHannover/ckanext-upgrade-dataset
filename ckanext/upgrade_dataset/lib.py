@@ -69,7 +69,7 @@ class Helper():
         machines_list = []
         username = None
         password = None
-        query = "[[Category:Equipment]]|?hasManufacturer|?hasModel"  # all Equipments (machines and tools)
+        query = "[[Category:Equipment]]|?hasManufacturer|?hasModel|?depiction"  # all Equipments (machines and tools)
         try:
             credentials = open('/etc/ckan/default/credentials/smw1368.txt', 'r').read()
             credentials = credentials.split('\n')
@@ -80,7 +80,7 @@ class Helper():
             return []
         
         api_call = API(username=username, password=password, query=query)
-        results = api_call.pipeline()
+        results, machine_imageUrl = api_call.pipeline()
         if results and len(results) > 0:
             temp = {}
             temp['value'] = '0'
@@ -92,7 +92,7 @@ class Helper():
                 temp['text'] = machine['page']
                 machines_list.append(temp)
                         
-            return machines_list
+            return [machines_list, machine_imageUrl]
         
         return []
     

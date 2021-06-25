@@ -41,7 +41,7 @@
               {{ input_object.select('machine_link' ~ loop.index, 
                   id='machines_dropdown' ~ loop.index,                  
                   options=machines_list, selected='', classes=[], attrs={'class': 'machine_dropdown'}, is_required=false) 
-              }} 
+              }}               
               <a href="https://service.tib.eu/sfb1368/wiki/Equipment" target='_blank'>
                 {{_('Add a new Equipment')}}
               </a>
@@ -58,6 +58,10 @@
       </div>      
       
   </form>
+  {% snippet 'snippets/machine_image.html' %}
+  {% for machine in machine_imageUrl %}
+            <div class="machine_url_div" id='{{machine.machine}}'>{{machine.image}}</div>
+  {% endfor %}
 
 {% endblock %}
 

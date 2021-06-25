@@ -82,3 +82,15 @@ edit-machines-js:
   contents:
     - edit_machine.js
   
+  machine-image-modal-js:  
+    output: ckanext-upgrade-dataset/%(version)s_my.js
+    extra:
+      preload:
+        - base/main
+        - vendor/vendor
+        - vendor/bootstrap
+        - vendor/jquery
+        - vendor/jquery.ui.core
+        - vendor/select2
+    contents:
+      - machine_image_modal.js
