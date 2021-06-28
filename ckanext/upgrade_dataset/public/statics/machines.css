@@ -20,3 +20,12 @@ th, td {
 .machine_url_div{
     display: none;
 }
+
+.machine_image_box{
+    display: none;
+}
+
+.responsive {
+    width: 100%;
+    height: auto;
+  }
