@@ -43,11 +43,19 @@
           <tr>
             <td>{{res.name}}</td>
             <td>
-              {{ input_object.select('machine_link' ~ loop.index, 
+              <select name={{'machine_link' ~ loop.index}} id={{'machines_dropdown_' ~ res.id}} class="machine_dropdown" >
+                {% for machine in machines_list %}              
+                  <option value={{machine.id}} image={{machine.image}}>
+                    {{machine.text}}                    
+                  </option>
+                {% endfor %}
+              </select>
+
+              {# {{ input_object.select('machine_link' ~ loop.index, 
                   id='machines_dropdown_' ~ res.id,                  
                   options=machines_list, selected='', classes=[], attrs={'class': 'machine_dropdown'}, is_required=false) 
-              }}
-              {% snippet 'snippets/machine_image.html', resource_id=res.id %}
+              }} #}
+              {# {% snippet 'snippets/machine_image.html', resource_id=res.id %} #}
               <input type="hidden"  name={{ 'resource_' ~ loop.index }} value='{{res.id}}'>
               <input type="hidden"  name={{ 'machine_name_' ~ loop.index }} id={{ 'machine_name_' ~ loop.index }} >        
             </td>
@@ -62,9 +70,9 @@
       
   </form>
   {# {% snippet 'snippets/machine_image.html' %} #}
-  {% for machine in machine_imageUrl %}
-            <div class="machine_url_div" id='{{machine.machine}}'>{{machine.image}}</div>
-  {% endfor %}
+{% for machine in machines_list %}              
+    <div class="machine_url_div" value='{{machine.text}}'>{{machine.image}}</div>  
+{% endfor %}
 
 {% endblock %}
 

@@ -88,8 +88,9 @@ class Helper():
             machines_list.append(temp)
             for machine in results:
                 temp = {}
-                temp['value'] = SMW1368_BASE_url + parse.quote(machine['page'])
+                temp['id'] = SMW1368_BASE_url + parse.quote(machine['page'])
                 temp['text'] = machine['page']
+                temp['image'] = machine_imageUrl.get( machine['page'])
                 machines_list.append(temp)
                         
             return [machines_list, machine_imageUrl]

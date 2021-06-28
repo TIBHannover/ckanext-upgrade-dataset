@@ -21,7 +21,7 @@ class API():
 
     def pipeline(self):
         results = []
-        machines_imageUrl = []
+        machines_imageUrl = {}
         try:
             self.login(self.host, self.path, self.scheme)
             raw_results = self.site.ask(self.query)
@@ -30,11 +30,8 @@ class API():
                 results.append(processed_answer)                
                 if 'depiction' in processed_answer.keys():
                     depiction_page =  processed_answer['depiction']
-                    depiction_url = self.mw_getfile_url(filepage=depiction_page)                    
-                    temp = {}
-                    temp['machine'] = processed_answer['page'].replace(" ", "_").replace("/", "_")
-                    temp['image'] = depiction_url
-                    machines_imageUrl.append(temp)
+                    depiction_url = self.mw_getfile_url(filepage=depiction_page)                                        
+                    machines_imageUrl[processed_answer['page']] = depiction_url                
         except:
             return None
 
