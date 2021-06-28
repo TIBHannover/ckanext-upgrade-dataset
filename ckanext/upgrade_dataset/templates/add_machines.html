@@ -47,7 +47,7 @@
                   id='machines_dropdown_' ~ res.id,                  
                   options=machines_list, selected='', classes=[], attrs={'class': 'machine_dropdown'}, is_required=false) 
               }}
-              {% snippet 'snippets/machine_image.html', resource_id=res.id %}                             
+              {% snippet 'snippets/machine_image.html', resource_id=res.id %}
               <input type="hidden"  name={{ 'resource_' ~ loop.index }} value='{{res.id}}'>
               <input type="hidden"  name={{ 'machine_name_' ~ loop.index }} id={{ 'machine_name_' ~ loop.index }} >        
             </td>

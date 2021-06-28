@@ -6,10 +6,10 @@ $(document).ready(function(){
         id = id[id.length - 1];
         $('#machine_name_' + id).val($(this).find(":selected").text());
         if($(this).find(":selected").val() != '0'){
-            let id = '#' + $(this).find(":selected").text().replace(/ /g, "_").replace(/\//g, "_");
-            let image_url = $(id).text(); 
+            // let id = '#' + $(this).find(":selected").text().replace(/ /g, "_").replace(/\//g, "_");
+            let image_url = $(this).find(":selected").val(); 
             let resource_id = $(this).attr('id').split('machines_dropdown_')[1];
-            $('#image_div_' + resource_id).find('img').attr('src', image_url);
+            $('#image_div_' + resource_id).find('a').attr('href', image_url);
             $('#image_div_' + resource_id).fadeIn();            
         }
         
