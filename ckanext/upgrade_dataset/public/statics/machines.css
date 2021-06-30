@@ -28,4 +28,8 @@ th, td {
 .responsive {
     width: 25%;
     height: 25%;
-  }
+}
+
+.select2-result {
+    margin-bottom: 10px;
+}
