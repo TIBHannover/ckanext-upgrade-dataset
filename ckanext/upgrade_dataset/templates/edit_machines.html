@@ -8,6 +8,14 @@
 
 
 {% block primary_content_inner %}
+    <p>
+        {{_('If you cannot find your Equipment, you can add it via the below button. Please refresh this page 
+        if you add a new Equipment.')}}
+        <br><br>
+        <a class="btn btn-primary" href="https://service.tib.eu/sfb1368/wiki/Equipment" target='_blank'>
+                {{_('Add New Equipment')}}
+        </a>
+    </p><br>
     {% set action = h.url_for('media_wiki.edit_save', _external=True) %}
     <form id="machine-form" class="" method="post" action='{{action}}' data-module="basic-form" enctype="multipart/form-data">        
         <input type="hidden" name="package"  value="{{pkg_dict['name']}}">
@@ -22,13 +30,25 @@
             <tr>
                 <td>{{res['name']}}</td>
                 <td>
-                {{ input_object.select('machine_link' ~ loop.index, 
+                <select name={{'machine_link' ~ loop.index}} id={{'machines_dropdown_' ~ loop.index}} class="machine_dropdown" >
+                    {% for machine in machines_list %}    
+                        {% if res.machine == machine.value %}                                      
+                            <option value={{machine.value}} image={{machine.image}} selected='selected'>
+                                {{machine.text}}                    
+                            </option>
+                        {% else %}
+                            <option value={{machine.value}} image={{machine.image}}>
+                                {{machine.text}}                    
+                            </option>
+                        {% endif %}
+                    {% endfor %}
+                </select>
+
+                {# {{ input_object.select('machine_link' ~ loop.index, 
                     id='machines_dropdown' ~ loop.index,                  
                     options=machines_list, selected=res['machine'], classes=[], attrs={'class': 'machine_dropdown'}, is_required=false) 
                 }}
-                <a href="https://service.tib.eu/sfb1368/wiki/Equipment" target='_blank'>
-                    {{_('Add a new Equipment')}}
-                </a> 
+                 #}
                 <input type="hidden"  name={{ 'resource_' ~ loop.index }} value='{{res["id"]}}'>
                 <input type="hidden"  name={{ 'machine_name_' ~ loop.index }} id={{ 'machine_name_' ~ loop.index }} >        
                 </td>
@@ -42,10 +62,11 @@
         </div>      
         
     </form>
-    {% snippet 'snippets/machine_image.html' %}
-    {% for machine in machine_imageUrl %}
-                <div class="machine_url_div" id='{{machine.machine}}'>{{machine.image}}</div>
+    
+    {% for machine in machines_list %}              
+        <div class="machine_url_div" value='{{machine.text}}'>{{machine.image}}</div>  
     {% endfor %}
+
 
 {% endblock %}
 

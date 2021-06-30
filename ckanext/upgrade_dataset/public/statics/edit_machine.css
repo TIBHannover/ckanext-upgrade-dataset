@@ -16,3 +16,12 @@ th, td {
 .machine_url_div{
     display: none;
 }
+
+.responsive {
+    width: 25%;
+    height: 25%;
+}
+
+.select2-result {
+    margin-bottom: 10px;
+}

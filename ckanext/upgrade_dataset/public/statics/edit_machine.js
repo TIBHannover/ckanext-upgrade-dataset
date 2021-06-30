@@ -1,18 +1,27 @@
+function formatState (state) {
+    if (!state.id) {
+      return $.trim(state.text);
+    }    
+    let image_url = $('div[value="' + $.trim(state.text) + '"]').text(); 
+    if(image_url == 'None'){
+      let $state = $.trim(state.text) + '<br><br>';
+      return $state;
+    }   
+    var $state = $(
+      '<span>' + $.trim(state.text) + '<br><img src="' + $.trim(image_url) + '"' + 'class="responsive">' + '</span>'
+    );
+    return $state;
+  };
+
 $(document).ready(function(){
     $('.machine_dropdown').parent().parent().find('label').hide(); 
-    $('.machine_dropdown').select2();
+    $("select.machine_dropdown").select2({
+        formatResult: formatState
+      });
     $('.machine_dropdown').change(function(){
         let id = $(this).attr('id');
         id = id[id.length - 1];
-        $('#machine_name_' + id).val($(this).find(":selected").text());
-        if($(this).find(":selected").val() != '0'){
-            let id = '#' + $(this).find(":selected").text().replace(/ /g, "_").replace(/\//g, "_");
-            let image_url = $(id).text();
-            console.info(id);                                 
-            $('#machine-preview').attr('src', image_url);
-            $('#machine_image_modal').modal('show');
-        }
+        $('#machine_name_' + id).val($.trim($(this).select2('data').text));        
     });
-    
 
 });
