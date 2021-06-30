@@ -43,7 +43,7 @@
           <tr>
             <td>{{res.name}}</td>
             <td>
-              <select name={{'machine_link' ~ loop.index}} id={{'machines_dropdown_' ~ res.id}} class="machine_dropdown" >
+              <select name={{'machine_link' ~ loop.index}} id={{'machines_dropdown_' ~ loop.index}} class="machine_dropdown" >
                 {% for machine in machines_list %}              
                   <option value={{machine.value}} image={{machine.image}}>
                     {{machine.text}}                    
