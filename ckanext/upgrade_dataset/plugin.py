@@ -1,7 +1,7 @@
 import ckan.plugins as plugins
 import ckan.plugins.toolkit as toolkit
 from flask import Blueprint
-from ckanext.upgrade_dataset.controllers import MediaWikiController
+from ckanext.upgrade_dataset.controllers.media_wiki import MediaWikiController
 
 
 class MediaWikiLinkPlugin(plugins.SingletonPlugin):
