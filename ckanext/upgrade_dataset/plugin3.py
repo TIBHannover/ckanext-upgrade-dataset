@@ -27,7 +27,7 @@ class LinkPublicationPlugin(plugins.SingletonPlugin):
             )
         
         blueprint.add_url_rule(
-            u'/upgrade_dataset/get_publication',
+            u'/upgrade_dataset/get_publication/<name>',
             u'get_publication',
             LinkPublicationController.get_publication,
             methods=['GET']

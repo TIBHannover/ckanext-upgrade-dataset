@@ -1,29 +1,35 @@
 {% asset 'ckanext-upgrade-dataset-link-publication/publication-info-table-js' %}
+{% asset 'ckanext-upgrade-dataset-link-publication/publication-info-table-css' %}
 
-<section class="additional-info">
-  <h3>{{ _('Publication Info') }}</h3>
-  <table class="table table-striped table-bordered table-condensed">    
-    <tbody>             
-          <tr>
-            <th scope="row" class="dataset-label">{{ _('Title') }}</th>            
-            <td class="dataset-details">A role for oxygen free radicals in aminonucleoside nephrosis </td>            
-          </tr>                      
-          <tr>
-            <th scope="row" class="dataset-label">{{ _('Year') }}</th>            
-            <td class="dataset-details">2007</td>            
-          </tr>   
-          <tr>
-            <th scope="row" class="dataset-label">{{ _('Author(s)') }}</th>            
-            <td class="dataset-details">Jonathan R, Joseph V, Morris J</td>            
-          </tr>    
-          <tr>
-            <th scope="row" class="dataset-label">{{ _('Publisher') }}</th>            
-            <td class="dataset-details">Elsevier BV</td>            
-          </tr>  
-          <tr>
-            <th scope="row" class="dataset-label">{{ _('Link') }}</th>            
-            <td class="dataset-details"><a href="http://dx.doi.org/10.1038/ki.1986.24" target="_blank">http://dx.doi.org/10.1038/ki.1986.24</a></td>            
-          </tr>  
-    </tbody>
-  </table>
-</section>
+{% set url = h.url_for('link_publication.get_publication', name=pkg_dict.name, _external=True)  %}
+<input type="hidden" name="package_name" id="package_name"  dest={{url}}>
+<div id="publication_section">
+  <section class="additional-info">
+    <h3>{{ _('Publication Info') }}</h3>
+    <table class="table table-striped table-bordered table-condensed">    
+      <tbody>             
+            <tr>
+              <th scope="row" class="dataset-label">{{ _('Title') }}</th>            
+              <td class="dataset-details">A role for oxygen free radicals in aminonucleoside nephrosis </td>            
+            </tr>                      
+            <tr>
+              <th scope="row" class="dataset-label">{{ _('Year') }}</th>            
+              <td class="dataset-details">2007</td>            
+            </tr>   
+            <tr>
+              <th scope="row" class="dataset-label">{{ _('Author(s)') }}</th>            
+              <td class="dataset-details">Jonathan R, Joseph V, Morris J</td>            
+            </tr>    
+            <tr>
+              <th scope="row" class="dataset-label">{{ _('Publisher') }}</th>            
+              <td class="dataset-details">Elsevier BV</td>            
+            </tr>  
+            <tr>
+              <th scope="row" class="dataset-label">{{ _('Link') }}</th>            
+              <td class="dataset-details"><a href="http://dx.doi.org/10.1038/ki.1986.24" target="_blank">http://dx.doi.org/10.1038/ki.1986.24</a></td>            
+            </tr>  
+      </tbody>
+    </table>
+  </section>
+</div>
+

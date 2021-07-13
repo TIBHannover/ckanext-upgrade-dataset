@@ -10,3 +10,9 @@ publication-info-table-js:
       - vendor/select2
   contents:
     - publication_info_table.js
+
+
+publication-info-table-css:
+  output: ckanext-upgrade-dataset/%(version)s_my.css
+  contents:
+    - publication_info.css

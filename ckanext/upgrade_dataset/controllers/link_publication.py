@@ -1,9 +1,10 @@
 # encoding: utf-8
 
 from flask import redirect, request
+from sqlalchemy.sql.expression import false
 import ckan.lib.helpers as h
 import ckan.plugins.toolkit as toolkit
-import ckan.model as model
+from ckanext.upgrade_dataset.model import PackagePublicationLink
 
 
 
@@ -27,5 +28,10 @@ class LinkPublicationController():
             return toolkit.abort(403, "bad request")
     
 
-    def get_publication():
-        return '1'
+    def get_publication(name):        
+        res_object = PackagePublicationLink(package_name=name)
+        result = res_object.get_by_package(name=name)
+        if result != false:
+            return '0'
+
+        return '0'
