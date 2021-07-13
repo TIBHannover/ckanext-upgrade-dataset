@@ -5,6 +5,7 @@ from sqlalchemy.sql.expression import false
 import ckan.lib.helpers as h
 import ckan.plugins.toolkit as toolkit
 from ckanext.upgrade_dataset.model import PackagePublicationLink
+from datetime import datetime as _time
 
 
 
@@ -21,17 +22,23 @@ class LinkPublicationController():
             toolkit.abort(403, 'You are not authorized to access this function')
 
         if package_id and doi:
-
-            return  redirect(h.url_for('dataset.read', id=str(package_id) ,  _external=True))   
-
+            package = toolkit.get_action('package_show')({}, {'name_or_id': package_id})
+            try:
+                record = PackagePublicationLink(package_name=package['name'], doi=doi, create_at = _time.now())
+                record.save()
+                return  redirect(h.url_for('dataset.read', id=str(package_id) ,  _external=True))   
+            except:
+                return toolkit.abort(403, "bad request")
+            
         else:
             return toolkit.abort(403, "bad request")
+    
     
 
     def get_publication(name):        
         res_object = PackagePublicationLink(package_name=name)
         result = res_object.get_by_package(name=name)
-        if result != false:
-            return '0'
+        if result != false:                        
+            return result
 
         return '0'

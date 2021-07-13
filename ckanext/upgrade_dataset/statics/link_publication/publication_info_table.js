@@ -6,7 +6,7 @@ $(document).ready(function(){
         dataType: 'json',      
         type: "GET",
         success: function(result){
-            if(result == '0'){
+            if(result != '0'){
                 $('#publication_section').show();
             }            
         }
