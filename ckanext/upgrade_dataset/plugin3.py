@@ -25,5 +25,12 @@ class LinkPublicationPlugin(plugins.SingletonPlugin):
             LinkPublicationController.save_doi,
             methods=['POST']
             )
+        
+        blueprint.add_url_rule(
+            u'/upgrade_dataset/get_publication',
+            u'get_publication',
+            LinkPublicationController.get_publication,
+            methods=['GET']
+        )
 
         return blueprint

@@ -22,6 +22,10 @@ class LinkPublicationController():
         if package_id and doi:
 
             return  redirect(h.url_for('dataset.read', id=str(package_id) ,  _external=True))   
-            
+
         else:
             return toolkit.abort(403, "bad request")
+    
+
+    def get_publication():
+        return '1'
