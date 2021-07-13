@@ -3,12 +3,12 @@ $(document).ready(function(){
     $.ajax({
         url: url,
         cache:false,   
-        dataType: 'json',      
+        // dataType: 'json',      
         type: "GET",
         success: function(result){
             if(result != '0'){
-                $('#publication_section').show();
-            }            
+                $('#publication_section').show();                
+            }                        
         }
     });
     

@@ -33,12 +33,12 @@ class LinkPublicationController():
         else:
             return toolkit.abort(403, "bad request")
     
-    
+
 
     def get_publication(name):        
         res_object = PackagePublicationLink(package_name=name)
         result = res_object.get_by_package(name=name)
         if result != false:                        
-            return result
+            return result.doi
 
         return '0'
