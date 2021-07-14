@@ -39,3 +39,13 @@ class Helper():
                 result = result + ', ' + au['given']
         
         return result  
+    
+    def create_table_row(meta_data):
+        row = '<tr>'
+        row = row +  '<td>' +  meta_data['type'] + '</td>'
+        row = row +  '<td>' +  meta_data['title'] + '</td>'
+        row = row +  '<td>' +  str(meta_data['year']) + '</td>'
+        row = row +  '<td>' +  meta_data['authors'] + '</td>'
+        row = row +  '<td><a href="' +  meta_data['link'] + '" target="_blank">Link</a></td>'
+        row = row +  '</tr>'
+        return row
