@@ -3,7 +3,7 @@
 import ckan.plugins.toolkit as toolkit
 from flask import render_template, request, redirect
 import ckan.lib.helpers as h
-from ckanext.upgrade_dataset.lib import Helper
+from ckanext.upgrade_dataset.libs.group_ownership import Helper
 
 
 class GroupOwnershipController():
