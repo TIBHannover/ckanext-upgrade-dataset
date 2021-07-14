@@ -5,29 +5,47 @@
 <input type="hidden" name="package_name" id="package_name"  dest={{url}}>
 <div id="publication_section">
   <section class="additional-info">
-    <h3>{{ _('Publication Info') }}</h3>
+    <h3>{{ _('Related Materials') }}</h3>
     <table class="table table-striped table-bordered table-condensed">    
-      <tbody>             
-            <tr>
-              <th scope="row" class="dataset-label">{{ _('Title') }}</th>            
-              <td class="dataset-details" id='title-td'> </td>            
-            </tr>                      
-            <tr>
-              <th scope="row" class="dataset-label">{{ _('Year') }}</th>            
-              <td class="dataset-details" id='year-td'></td>            
-            </tr>   
-            <tr>
-              <th scope="row" class="dataset-label">{{ _('Author(s)') }}</th>            
-              <td class="dataset-details" id='author-td'></td>            
-            </tr>    
-            <tr>
-              <th scope="row" class="dataset-label">{{ _('Publisher') }}</th>            
-              <td class="dataset-details" id='publisher-td'></td>            
-            </tr>  
-            <tr>
-              <th scope="row" class="dataset-label">{{ _('Link') }}</th>            
-              <td class="dataset-details" id='link-td'><a href="" target="_blank"></a></td>            
-            </tr>  
+      <tbody>
+        <tr>
+          <th>{{_('Type')}}</th>
+          <th>{{_('Title')}}</th>
+          <th>{{_('Year')}}</th>
+          <th>{{_('Author(s)')}}</th>
+          <th>{{_('Link')}}</th>
+        </tr>
+
+        <tr>
+          <td>A</td>
+          <td>A</td>
+          <td>A</td>
+          <td>A</td>
+          <td>A</td>
+        </tr>
+
+
+
+        {# <tr>
+          <th scope="row" class="dataset-label">{{ _('Title') }}</th>            
+          <td class="dataset-details" id='title-td'> </td>            
+        </tr>                      
+        <tr>
+          <th scope="row" class="dataset-label">{{ _('Year') }}</th>            
+          <td class="dataset-details" id='year-td'></td>            
+        </tr>   
+        <tr>
+          <th scope="row" class="dataset-label">{{ _('Author(s)') }}</th>            
+          <td class="dataset-details" id='author-td'></td>            
+        </tr>    
+        <tr>
+          <th scope="row" class="dataset-label">{{ _('Publisher') }}</th>            
+          <td class="dataset-details" id='publisher-td'></td>            
+        </tr>  
+        <tr>
+          <th scope="row" class="dataset-label">{{ _('Link') }}</th>            
+          <td class="dataset-details" id='link-td'><a href="" target="_blank"></a></td>            
+        </tr>   #}
       </tbody>
     </table>
   </section>
