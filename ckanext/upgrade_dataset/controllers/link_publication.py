@@ -6,6 +6,7 @@ import ckan.lib.helpers as h
 import ckan.plugins.toolkit as toolkit
 from ckanext.upgrade_dataset.model import PackagePublicationLink
 from datetime import datetime as _time
+from ckanext.upgrade_dataset.libs.link_publication import Helper
 
 
 
@@ -39,6 +40,9 @@ class LinkPublicationController():
         res_object = PackagePublicationLink(package_name=name)
         result = res_object.get_by_package(name=name)
         if result != false:                        
-            return result.doi
+            meta_data = Helper.process_doi_link(result.doi)
+            if meta_data:
+                meta_data['link'] = result.doi
+                return meta_data
 
         return '0'

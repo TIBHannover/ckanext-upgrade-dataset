@@ -7,6 +7,10 @@ $(document).ready(function(){
         type: "GET",
         success: function(result){
             if(result != '0'){
+                
+
+
+
                 $('#publication_section').show();                
             }                        
         }
