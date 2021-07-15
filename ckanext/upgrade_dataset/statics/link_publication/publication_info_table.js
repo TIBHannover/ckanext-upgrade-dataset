@@ -10,6 +10,9 @@ $(document).ready(function(){
                 $('#material_info_header_tr').after(result);
                 $('#loading_publications').hide();
                 $('#publication_section').show();                
+            }
+            else{
+                $('#loading_publications').hide();
             }                        
         }
     });

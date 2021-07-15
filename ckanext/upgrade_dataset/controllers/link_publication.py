@@ -40,6 +40,8 @@ class LinkPublicationController():
         res_object = PackagePublicationLink(package_name=name)
         result = res_object.get_by_package(name=name)
         return_rows = ""
+        if result == false:
+            return '0'
         for source in result:
             meta_data = Helper.process_doi_link(source.doi)
             if meta_data:
