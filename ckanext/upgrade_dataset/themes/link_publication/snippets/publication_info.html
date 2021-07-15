@@ -3,6 +3,9 @@
 
 {% set url = h.url_for('link_publication.get_publication', name=pkg_dict.name, _external=True)  %}
 <input type="hidden" name="package_name" id="package_name"  dest={{url}}>
+<div id="loading_publications">
+  <i class="fa fa-spinner fa-spin"></i>
+</div>
 <div id="publication_section">
   <section class="additional-info">
     <h3>{{ _('Related Materials') }}</h3>

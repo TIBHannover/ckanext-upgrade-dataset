@@ -8,6 +8,7 @@ $(document).ready(function(){
         success: function(result){
             if(result != '0'){                               
                 $('#material_info_header_tr').after(result);
+                $('#loading_publications').hide();
                 $('#publication_section').show();                
             }                        
         }

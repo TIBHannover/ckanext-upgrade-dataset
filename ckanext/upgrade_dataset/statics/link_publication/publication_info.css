@@ -1,3 +1,12 @@
 #publication_section{
     display: none;
 }
+
+#loading_publications{
+    text-align: center;
+}
+
+#loading_publications > i{
+    font-size:80px;
+    color: #003C6D;
+}
