@@ -35,7 +35,7 @@ class PackagePublicationLink(domain_object.DomainObject):
             return false
         query = meta.Session.query(cls).filter(cls.package_name==name)
         query = query.autoflush(autoflush)
-        record = query.first()
+        record = query.all()
         return record
 
     

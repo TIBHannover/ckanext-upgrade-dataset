@@ -39,10 +39,14 @@ class LinkPublicationController():
     def get_publication(name):        
         res_object = PackagePublicationLink(package_name=name)
         result = res_object.get_by_package(name=name)
-        if result != false:                        
-            meta_data = Helper.process_doi_link(result.doi)
+        return_rows = ""
+        for source in result:
+            meta_data = Helper.process_doi_link(source.doi)
             if meta_data:
-                meta_data['link'] = result.doi
-                return Helper.create_table_row(meta_data)
-
+                meta_data['link'] = source.doi
+                return_rows += Helper.create_table_row(meta_data)
+        
+        if return_rows != "":
+            return return_rows
+        
         return '0'
