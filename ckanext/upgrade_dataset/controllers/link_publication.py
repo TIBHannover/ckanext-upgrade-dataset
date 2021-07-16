@@ -22,7 +22,7 @@ class LinkPublicationController():
         except toolkit.NotAuthorized:
             toolkit.abort(403, 'You are not authorized to access this function')
 
-        if package_id and doi:
+        if package_id and doi and Helper.check_doi_validity(doi) == True:
             package = toolkit.get_action('package_show')({}, {'name_or_id': package_id})
             try:
                 record = PackagePublicationLink(package_name=package['name'], doi=doi, create_at = _time.now())
