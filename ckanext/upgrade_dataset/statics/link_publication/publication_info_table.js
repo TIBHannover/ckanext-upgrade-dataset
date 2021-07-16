@@ -17,14 +17,25 @@ $(document).ready(function(){
         }
     });
 
-    // $('#doi-form').submit(function(){
-    //     let doi_input = $('#doi').val();
-
+    $('#doi-form').submit(function(e){
+        e.preventDefault();
+        let doi_input = $('#doi').val();
+        $.ajax({
+            url: $('#doi-validity-url').val(),
+            cache:false,   
+            data: {'doi_url': doi_input},
+            // dataType: 'json',      
+            type: "POST",
+            success: function(result){
+                if(result != '1'){                               
+                    return false;             
+                }
+                else{
+                    // $('#loading_publications').hide();
+                }                        
+            }
+        });
         
-        
-        
-        
-    //     return false;
-    // });
+    });
     
 });

@@ -1,5 +1,6 @@
 # encoding: utf-8
 
+from flask.globals import request
 import ckan.plugins.toolkit as toolkit
 import urllib.request, json 
 
@@ -8,6 +9,9 @@ Base_crossref_url = "https://api.crossref.org/works/"
 class Helper():
 
     def parse_doi_id(url):
+        if 'doi.org/' not in url:
+            return None
+
         temp = url.split('doi.org/')
         doi_id = temp[len(temp) - 1]
         return doi_id
@@ -15,11 +19,15 @@ class Helper():
 
     def call_api(api_url):
         response = None
-        with urllib.request.urlopen(api_url) as url:            
-            if url.code == 200:
-                response = json.loads(url.read().decode())
+        try:
+            with urllib.request.urlopen(api_url) as url:            
+                if url.code == 200:
+                    response = json.loads(url.read().decode())
         
-        return response
+            return response
+        
+        except:
+            return None
 
 
     def process_doi_link(doi_link):
@@ -67,8 +75,13 @@ class Helper():
         return row
     
 
-    # def check_doi_validity(doi_url):
-    #     doi = Helper.parse_doi_id(doi_url)
+    def check_doi_validity(doi_url):        
+        doi = Helper.parse_doi_id(doi_url)
+        if not doi:
+            return 'url not vaid'
+        dest_url = Base_crossref_url + doi
+        response = Helper.call_api(dest_url)
+        if response:
+            return True
 
-
-    #     return True
+        return None

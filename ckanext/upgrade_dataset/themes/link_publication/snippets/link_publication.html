@@ -2,6 +2,7 @@
  {% set action = h.url_for('link_publication.save_doi', _external=True) %}
 
 <button type="button" class="btn btn-default" data-toggle="modal" data-target="#myModal">Link Publication</button>
+<input type="hidden" id="doi-validity-url" value={{h.url_for('link_publication.doi_is_valid', _external=True)}}>
 
 <div id="myModal" class="modal fade" role="dialog">
   <div class="modal-dialog">

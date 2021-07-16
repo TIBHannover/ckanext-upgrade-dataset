@@ -33,4 +33,11 @@ class LinkPublicationPlugin(plugins.SingletonPlugin):
             methods=['GET']
         )
 
+        blueprint.add_url_rule(
+            u'/upgrade_dataset/doi_is_valid',
+            u'doi_is_valid',
+            LinkPublicationController.doi_is_valid,
+            methods=['POST']
+        )
+
         return blueprint
