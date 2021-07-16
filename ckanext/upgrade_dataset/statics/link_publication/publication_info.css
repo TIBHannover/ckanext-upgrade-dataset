@@ -10,3 +10,8 @@
     font-size:80px;
     color: #003C6D;
 }
+
+#doi_validation_message{
+    color: red;
+    font-size: small;
+}

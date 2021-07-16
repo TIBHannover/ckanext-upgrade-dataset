@@ -19,11 +19,12 @@
             classes=['control-medium'] ,
             placeholder="https://doi.org/xxxxx")
         }}
+        <div id="doi_validation_message"></div>
         <input type="hidden" name="package_id" value={{pkg_dict.id}}>
       </div>
       <div class="modal-footer">
-        <button type="submit" class="btn btn-primary">{{_('Save')}}</button>
       </form>
+        <button id="doi_submit_btn" class="btn btn-primary">{{_('Save')}}</button>
         <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
       </div>
     </div>

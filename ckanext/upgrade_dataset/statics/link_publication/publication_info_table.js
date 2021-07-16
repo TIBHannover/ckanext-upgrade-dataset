@@ -2,8 +2,7 @@ $(document).ready(function(){
     let url = $('#package_name').attr('dest');
     $.ajax({
         url: url,
-        cache:false,   
-        // dataType: 'json',      
+        cache:false,            
         type: "GET",
         success: function(result){
             if(result != '0'){                               
@@ -17,21 +16,19 @@ $(document).ready(function(){
         }
     });
 
-    $('#doi-form').submit(function(e){
-        e.preventDefault();
+    $('#doi_submit_btn').click(function(e){        
         let doi_input = $('#doi').val();
         $.ajax({
             url: $('#doi-validity-url').val(),
             cache:false,   
-            data: {'doi_url': doi_input},
-            // dataType: 'json',      
+            data: {'doi_url': doi_input},            
             type: "POST",
             success: function(result){
                 if(result != '1'){                               
-                    return false;             
+                    $('#doi_validation_message').text(result);           
                 }
                 else{
-                    // $('#loading_publications').hide();
+                    $('#doi-form').submit();
                 }                        
             }
         });
