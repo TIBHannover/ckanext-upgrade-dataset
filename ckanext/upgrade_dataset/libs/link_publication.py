@@ -64,13 +64,14 @@ class Helper():
         
         return result  
     
-    def create_table_row(meta_data):
+    def create_table_row(meta_data, object_id):
         row = '<tr>'
         row = row +  '<td>' +  meta_data['type'] + '</td>'
         row = row +  '<td>' +  meta_data['title'] + '</td>'
         row = row +  '<td>' +  str(meta_data['year']) + '</td>'
         row = row +  '<td>' +  meta_data['authors'] + '</td>'
         row = row +  '<td><a href="' +  meta_data['link'] + '" target="_blank">Link</a></td>'
+        row = row +  '<td><a href="#"><i class="fa fa-trash-o"></i></a></td>'
         row = row +  '</tr>'
         return row
     

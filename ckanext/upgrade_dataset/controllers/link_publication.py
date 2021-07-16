@@ -46,7 +46,7 @@ class LinkPublicationController():
             meta_data = Helper.process_doi_link(source.doi)
             if meta_data:
                 meta_data['link'] = source.doi
-                return_rows += Helper.create_table_row(meta_data)
+                return_rows += Helper.create_table_row(meta_data, source.id)
         
         if return_rows != "":
             return return_rows
