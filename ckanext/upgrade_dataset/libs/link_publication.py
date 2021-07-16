@@ -11,6 +11,17 @@ Base_crossref_url = "https://api.crossref.org/works/"
 
 class Helper():
 
+    def check_access_edit_package(package_id):
+        context = {'user': toolkit.g.user, 'auth_user_obj': toolkit.g.userobj}
+        data_dict = {'id':package_id}
+        try:
+            toolkit.check_access('package_update', context, data_dict)
+            return True
+
+        except toolkit.NotAuthorized:
+            toolkit.abort(403, 'You are not authorized to access this function')
+
+
     def parse_doi_id(url):
         if 'doi.org/' not in url:
             return None

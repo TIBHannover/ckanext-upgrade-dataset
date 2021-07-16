@@ -15,12 +15,7 @@ class LinkPublicationController():
     def save_doi():
         package_id = request.form.get('package_id')       
         doi = request.form.get('doi')       
-        context = {'user': toolkit.g.user, 'auth_user_obj': toolkit.g.userobj}
-        data_dict = {'id':package_id}
-        try:
-            toolkit.check_access('package_update', context, data_dict)
-        except toolkit.NotAuthorized:
-            toolkit.abort(403, 'You are not authorized to access this function')
+        Helper.check_access_edit_package(package_id)
 
         if package_id and doi and Helper.check_doi_validity(doi) == True:
             package = toolkit.get_action('package_show')({}, {'name_or_id': package_id})
@@ -67,10 +62,12 @@ class LinkPublicationController():
     
 
     def delete_doi(doi_id):
-        try:
-            res_object = PackagePublicationLink()
-            doi_obj = res_object.get_by_id(id=doi_id)
-            package_name = doi_obj.package_name            
+        res_object = PackagePublicationLink()
+        doi_obj = res_object.get_by_id(id=doi_id)
+        package_name = doi_obj.package_name
+        package = toolkit.get_action('package_show')({}, {'name_or_id': package_name})
+        Helper.check_access_edit_package(package['id'])
+        try:            
             doi_obj.delete()
             doi_obj.commit()
             return  redirect(h.url_for('dataset.read', id=str(package_name) ,  _external=True)) 
