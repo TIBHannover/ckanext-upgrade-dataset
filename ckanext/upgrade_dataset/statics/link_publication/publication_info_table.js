@@ -16,5 +16,15 @@ $(document).ready(function(){
             }                        
         }
     });
+
+    // $('#doi-form').submit(function(){
+    //     let doi_input = $('#doi').val();
+
+        
+        
+        
+        
+    //     return false;
+    // });
     
 });

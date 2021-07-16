@@ -52,3 +52,9 @@ class LinkPublicationController():
             return return_rows
         
         return '0'
+    
+
+    def doi_is_valid():
+
+
+        return '0'

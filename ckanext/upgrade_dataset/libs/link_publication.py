@@ -7,21 +7,37 @@ Base_crossref_url = "https://api.crossref.org/works/"
 
 class Helper():
 
-    def process_doi_link(doi_link):
-        try:
-            temp = doi_link.split('doi.org/')
-            doi_id = temp[len(temp) - 1]
-            dest_url = Base_crossref_url + doi_id
-            with urllib.request.urlopen(dest_url) as url:
-                response = json.loads(url.read().decode())
-            
-            processed_result = {}
-            processed_result['type'] = response.get('message').get('type')
-            processed_result['title'] = response.get('message').get('title')[0]
-            processed_result['year'] = response.get('message').get('created').get('date-parts')[0][0]
-            processed_result['authors'] = Helper.extract_authors(response.get('message').get('author'))
+    def parse_doi_id(url):
+        temp = url.split('doi.org/')
+        doi_id = temp[len(temp) - 1]
+        return doi_id
+    
 
-            return processed_result
+    def call_api(api_url):
+        response = None
+        with urllib.request.urlopen(api_url) as url:            
+            if url.code == 200:
+                response = json.loads(url.read().decode())
+        
+        return response
+
+
+    def process_doi_link(doi_link):
+        try:            
+            doi_id = Helper.parse_doi_id(doi_link)
+            dest_url = Base_crossref_url + doi_id
+            response = Helper.call_api(dest_url)
+            if response:
+                processed_result = {}
+                processed_result['type'] = response.get('message').get('type')
+                processed_result['title'] = response.get('message').get('title')[0]
+                processed_result['year'] = response.get('message').get('created').get('date-parts')[0][0]
+                processed_result['authors'] = Helper.extract_authors(response.get('message').get('author'))
+
+                return processed_result
+            
+            else:
+                return None
         
         except:
             return None
@@ -49,3 +65,10 @@ class Helper():
         row = row +  '<td><a href="' +  meta_data['link'] + '" target="_blank">Link</a></td>'
         row = row +  '</tr>'
         return row
+    
+
+    # def check_doi_validity(doi_url):
+    #     doi = Helper.parse_doi_id(doi_url)
+
+
+    #     return True
