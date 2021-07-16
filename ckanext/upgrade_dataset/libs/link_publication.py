@@ -4,6 +4,8 @@ from ckanext.upgrade_dataset import model
 from flask.globals import request
 import ckan.plugins.toolkit as toolkit
 import urllib.request, json 
+import ckan.lib.helpers as h
+
 
 Base_crossref_url = "https://api.crossref.org/works/"
 
@@ -90,6 +92,7 @@ class Helper():
 
 
     def create_delete_modal(object_id):
+        delete_url = h.url_for('link_publication.delete_doi', doi_id=str(object_id) ,  _external=True)
         modal = '<a href="#" type="button" data-toggle="modal" data-target="#deleteModal' + str(object_id) +  '"><i class="fa fa-trash-o"></i></a>'
         modal += '<div id="deleteModal' + str(object_id)  + '" class="modal fade" role="dialog">'
         modal += '<div class="modal-dialog">'
@@ -101,7 +104,7 @@ class Helper():
         modal += '<p><h3>Are you sure about deleting this material?</h3></p>'
         modal += '</div>'
         modal += '<div class="modal-footer">'
-        modal += '<a href="#" type="button" class="btn btn-danger" data-dismiss="modal">Delete</a>'
+        modal += '<a href="' + delete_url + '" type="button" class="btn btn-danger">Delete</a>'
         modal += '<button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>'
         modal += '</div>'
         modal += '</div>'

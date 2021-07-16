@@ -40,4 +40,11 @@ class LinkPublicationPlugin(plugins.SingletonPlugin):
             methods=['POST']
         )
 
+        blueprint.add_url_rule(
+            u'/upgrade_dataset/delete_doi/<doi_id>',
+            u'delete_doi',
+            LinkPublicationController.delete_doi,
+            methods=['GET']
+        )
+
         return blueprint

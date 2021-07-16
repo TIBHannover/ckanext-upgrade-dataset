@@ -37,6 +37,20 @@ class PackagePublicationLink(domain_object.DomainObject):
         query = query.autoflush(autoflush)
         record = query.all()
         return record
+    
+
+    @classmethod
+    def get_by_id(cls, id, autoflush=True):
+        if not id:
+            return None
+
+        exists = meta.Session.query(cls).filter(cls.id==id).first() is not None
+        if not exists:
+            return false
+        query = meta.Session.query(cls).filter(cls.id==id)
+        query = query.autoflush(autoflush)
+        record = query.first()
+        return record
 
     
     def get_package(self):

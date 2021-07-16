@@ -64,3 +64,16 @@ class LinkPublicationController():
             return 'Please enter a valid doi url. Ex: https://www.doi.org/DOI_ID'
         
         return '1'
+    
+
+    def delete_doi(doi_id):
+        try:
+            res_object = PackagePublicationLink()
+            doi_obj = res_object.get_by_id(id=doi_id)
+            package_name = doi_obj.package_name            
+            doi_obj.delete()
+            doi_obj.commit()
+            return  redirect(h.url_for('dataset.read', id=str(package_name) ,  _external=True)) 
+
+        except:
+            return toolkit.abort(403, "bad request")
