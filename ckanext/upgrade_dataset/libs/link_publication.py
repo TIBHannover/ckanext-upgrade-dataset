@@ -1,5 +1,6 @@
 # encoding: utf-8
 
+from ckanext.upgrade_dataset import model
 from flask.globals import request
 import ckan.plugins.toolkit as toolkit
 import urllib.request, json 
@@ -71,7 +72,7 @@ class Helper():
         row = row +  '<td>' +  str(meta_data['year']) + '</td>'
         row = row +  '<td>' +  meta_data['authors'] + '</td>'
         row = row +  '<td><a href="' +  meta_data['link'] + '" target="_blank">Link</a></td>'
-        row = row +  '<td><a href="#"><i class="fa fa-trash-o"></i></a></td>'
+        row = row +  '<td>' +  Helper.create_delete_modal(object_id) + '</td>'  
         row = row +  '</tr>'
         return row
     
@@ -86,3 +87,25 @@ class Helper():
             return True
 
         return None
+
+
+    def create_delete_modal(object_id):
+        modal = '<a href="#" type="button" data-toggle="modal" data-target="#deleteModal' + str(object_id) +  '"><i class="fa fa-trash-o"></i></a>'
+        modal += '<div id="deleteModal' + str(object_id)  + '" class="modal fade" role="dialog">'
+        modal += '<div class="modal-dialog">'
+        modal += '<div class="modal-content">'
+        modal += '<div class="modal-header">'
+        modal += '<button type="button" class="close" data-dismiss="modal">&times;</button>'
+        modal += '</div>'
+        modal += '<div class="modal-body">'
+        modal += '<p><h3>Are you sure about deleting this material?</h3></p>'
+        modal += '</div>'
+        modal += '<div class="modal-footer">'
+        modal += '<a href="#" type="button" class="btn btn-danger" data-dismiss="modal">Delete</a>'
+        modal += '<button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>'
+        modal += '</div>'
+        modal += '</div>'
+        modal += '</div>'
+        modal += '</div>'
+                
+        return modal
