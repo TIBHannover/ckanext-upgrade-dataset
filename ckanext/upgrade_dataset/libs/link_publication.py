@@ -91,7 +91,13 @@ class Helper():
             citation_text += ('vol. ' + response.get('volume') + ', ')
             citation_text += ('pp. ' + response.get('pages') + ', ')
             citation_text += (response.get('month') + ' ' + response.get('year') + '.')
-
+        
+        elif response['ENTRYTYPE'] in ['misc']: # dataset
+            citation_text += (response.get('author') + ', ')
+            citation_text += ('"<i>' + response.get('title') + '</i>." ')
+            citation_text += (response.get('publisher') + ', ')
+            citation_text += (response.get('year') + ', ')
+            citation_text += ( 'doi: ' + response.get('doi') + '.')
 
 
 
