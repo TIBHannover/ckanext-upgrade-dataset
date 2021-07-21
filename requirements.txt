@@ -1,1 +1,2 @@
+bibtexparser==1.2.0
 mwclient==0.10.1
