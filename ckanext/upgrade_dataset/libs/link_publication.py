@@ -1,13 +1,15 @@
 # encoding: utf-8
 
+from werkzeug.datastructures import Headers
 from ckanext.upgrade_dataset import model
 from flask.globals import request
 import ckan.plugins.toolkit as toolkit
 import urllib.request, json 
 import ckan.lib.helpers as h
+import bibtexparser
 
 
-Base_crossref_url = "https://api.crossref.org/works/"
+Base_doi_api_url = "http://dx.doi.org/"
 
 class Helper():
 
@@ -33,10 +35,12 @@ class Helper():
 
     def call_api(api_url):
         response = None
+        request_header = {'Accept': 'application/x-bibtex'}                
         try:
-            with urllib.request.urlopen(api_url) as url:            
-                if url.code == 200:
-                    response = json.loads(url.read().decode())
+            req_obj = urllib.request.Request(api_url, headers=request_header)
+            with urllib.request.urlopen(req_obj) as url:            
+                if url.code == 200:                    
+                    response = bibtexparser.load(url).entries[0]
         
             return response
         
@@ -45,16 +49,17 @@ class Helper():
 
 
     def process_doi_link(doi_link):
+               
         try:            
             doi_id = Helper.parse_doi_id(doi_link)
-            dest_url = Base_crossref_url + doi_id
+            dest_url = Base_doi_api_url + doi_id
             response = Helper.call_api(dest_url)
-            if response:
+            if response:                        
                 processed_result = {}
-                processed_result['type'] = response.get('message').get('type')
-                processed_result['title'] = response.get('message').get('title')[0]
-                processed_result['year'] = response.get('message').get('created').get('date-parts')[0][0]
-                processed_result['authors'] = Helper.extract_authors(response.get('message').get('author'))
+                processed_result['type'] = response['ENTRYTYPE']
+                processed_result['title'] = response['title']
+                processed_result['year'] = response['year']
+                processed_result['authors'] = response['author']
 
                 return processed_result
             
@@ -94,7 +99,7 @@ class Helper():
         doi = Helper.parse_doi_id(doi_url)
         if not doi:
             return 'url not vaid'
-        dest_url = Base_crossref_url + doi
+        dest_url = Base_doi_api_url + doi
         response = Helper.call_api(dest_url)
         if response:
             return True
