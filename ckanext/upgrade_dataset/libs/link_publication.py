@@ -56,11 +56,7 @@ class Helper():
             response = Helper.call_api(dest_url)
             if response:                        
                 processed_result = {}
-                processed_result['type'] = response['ENTRYTYPE']
-                processed_result['title'] = response['title']
-                processed_result['year'] = response['year']
-                processed_result['authors'] = response['author']
-
+                processed_result['cite'] = Helper.create_citation(response)
                 return processed_result
             
             else:
@@ -68,27 +64,44 @@ class Helper():
         
         except:
             return None
-
     
+    
+    def create_citation(response):
+        citation_text = ""
+        # material_type = {
+        #     'books' : 'Book in print',
+        #     'booklet' : 'Book in print',
+        #     'inbook' : 'Chapter in book',
+        #     'incollection': 'Chapter in book',
+        #     'article' : 'Journal article', 
+        #     'conference': 'Conference paper',
+        #     'inproceedings': 'Conference paper',
+        #     'proceedings': 'Conference paper',
+        #     'techreport': 'Technical report',
+        #     'masterthesis': 'Thesis',
+        #     'phdthesis': 'Thesis',
+        #     'misc': 'dataset',
+        # }
 
-    def extract_authors(authors_list):
-        result = ""
-        for au in authors_list:
-            if au['sequence'] == 'first' and result == "":
-                result = au['given'] 
-            elif au['sequence'] == 'first' and result != "":
-                result = au['given'] + ', ' + result
-            else:
-                result = result + ', ' + au['given']
-        
-        return result  
+        if response['ENTRYTYPE'] in ['article']:
+            citation_text += (response.get('author') + ', ')
+            citation_text += ('"<i>' + response.get('title') + '</i>," ')
+            citation_text += (response.get('publisher') + '. ')
+            citation_text += (response.get('journal') + '., ')
+            citation_text += ('vol. ' + response.get('volume') + ', ')
+            citation_text += ('pp. ' + response.get('pages') + ', ')
+            citation_text += (response.get('month') + ' ' + response.get('year') + '.')
+
+
+
+
+        return citation_text
+
+
     
     def create_table_row(meta_data, object_id):
         row = '<tr>'
-        row = row +  '<td>' +  meta_data['type'] + '</td>'
-        row = row +  '<td>' +  meta_data['title'] + '</td>'
-        row = row +  '<td>' +  str(meta_data['year']) + '</td>'
-        row = row +  '<td>' +  meta_data['authors'] + '</td>'
+        row = row +  '<td>' +  meta_data['cite'] + '</td>'        
         row = row +  '<td><a href="' +  meta_data['link'] + '" target="_blank">Link</a></td>'
         row = row +  '<td>' +  Helper.create_delete_modal(object_id) + '</td>'  
         row = row +  '</tr>'
