@@ -68,20 +68,6 @@ class Helper():
     
     def create_citation(response):
         citation_text = ""
-        # material_type = {
-        #     'books' : 'Book in print',
-        #     'booklet' : 'Book in print',
-        #     'inbook' : 'Chapter in book',
-        #     'incollection': 'Chapter in book',
-        #     'article' : 'Journal article', 
-        #     'conference': 'Conference paper',
-        #     'inproceedings': 'Conference paper',
-        #     'proceedings': 'Conference paper',
-        #     'techreport': 'Technical report',
-        #     'masterthesis': 'Thesis',
-        #     'phdthesis': 'Thesis',
-        #     'misc': 'dataset',
-        # }
 
         if response['ENTRYTYPE'] in ['article']:
             if response.get('author'):
@@ -100,8 +86,7 @@ class Helper():
                 citation_text += (response.get('month') + ' ')
             if response.get('year'):
                 citation_text += (response.get('year') + '.')
-
-        
+  
         elif response['ENTRYTYPE'] in ['misc']: 
             if response.get('author'):
                 citation_text += (response.get('author') + ', ')
@@ -163,6 +148,48 @@ class Helper():
                 citation_text += (response.get('address') + ', ')            
             if response.get('year'):
                 citation_text += (response.get('year') + '.')
+        
+        elif response['ENTRYTYPE'] in ['book']:
+            if response.get('author'):
+                citation_text += (response.get('author') + ', ')
+            if response.get('title'):
+                citation_text += ('"<i>' + response.get('title') + '</i>," ')
+            if response.get('address'):
+                citation_text += (response.get('address') + ', ')
+            if response.get('publisher'):
+                citation_text += (response.get('publisher') + ', ')
+            if response.get('year'):
+                citation_text += (response.get('year') + '.')
+        
+        elif response['ENTRYTYPE'] in ['masterthesis']:
+            if response.get('author'):
+                citation_text += (response.get('author') + ', ')
+            if response.get('title'):
+                citation_text += ('"<i>' + response.get('title') + '</i>," Master Thesis, ')
+            if response.get('school'):
+                citation_text += (response.get('school') + ', ')
+            if response.get('address'):
+                citation_text += (response.get('address') + ', ')
+            if response.get('month'):
+                citation_text += (response.get('month') + '. ')
+            if response.get('year'):
+                citation_text += (response.get('year') + '.')
+        
+        elif response['ENTRYTYPE'] in ['phdthesis']:
+            if response.get('author'):
+                citation_text += (response.get('author') + ', ')
+            if response.get('title'):
+                citation_text += ('"<i>' + response.get('title') + '</i>," PhD Thesis, ')
+            if response.get('school'):
+                citation_text += (response.get('school') + ', ')
+            if response.get('address'):
+                citation_text += (response.get('address') + ', ')
+            if response.get('month'):
+                citation_text += (response.get('month') + '. ')
+            if response.get('year'):
+                citation_text += (response.get('year') + '.')
+        
+
         
 
 
