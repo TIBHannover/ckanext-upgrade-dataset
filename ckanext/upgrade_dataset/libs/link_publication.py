@@ -113,17 +113,29 @@ class Helper():
                 citation_text += (response.get('year') + ', ')
             if response.get('doi'):
                 citation_text += ( 'doi: ' + response.get('doi') + '.')
-
+        
+        elif response['ENTRYTYPE'] in ['conference', 'inproceedings', 'proceedings']:
+            if response.get('author'):
+                citation_text += (response.get('author') + ', ')
+            if response.get('title'):
+                citation_text += ('"<i>' + response.get('title') + '</i>," ')
+            if response.get('booktitle'):
+                citation_text += (response.get('booktitle') + ', ')
+            if response.get('series'):
+                citation_text += (response.get('series') + ', ')
+            if response.get('address'):
+                citation_text += (response.get('address') + ', ')
+            if response.get('pages'):
+                citation_text += ('pp. ' + response.get('pages') + ', ')
+            if response.get('publisher'):
+                citation_text += (response.get('publisher') + ', ')
+            if response.get('year'):
+                citation_text += (response.get('year') + '.')
+            
 
 
         return citation_text
     
-
-    def none_type_checker(arg):
-        if not arg:
-            return ''
-        return arg
-
 
     def create_table_row(meta_data, object_id):
         row = '<tr>'
