@@ -189,12 +189,24 @@ class Helper():
             if response.get('year'):
                 citation_text += (response.get('year') + '.')
         
-
-        
-
-
+        elif response['ENTRYTYPE'] in ['techreport']:
+            if response.get('author'):
+                citation_text += (response.get('author') + ', ')
+            if response.get('title'):
+                citation_text += ('"<i>' + response.get('title') + '</i>," Tech.Rep. ')
+            if response.get('number'):
+                citation_text += (response.get('number') + ', ')
+            if response.get('institution'):
+                citation_text += (response.get('institution') + ', ')
+            if response.get('address'):
+                citation_text += (response.get('address') + ', ')
+            if response.get('month'):
+                citation_text += (response.get('month') + '. ')
+            if response.get('year'):
+                citation_text += (response.get('year') + '.')
 
         return citation_text
+    
     
 
     def create_table_row(meta_data, object_id):
