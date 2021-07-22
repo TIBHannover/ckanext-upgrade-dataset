@@ -205,9 +205,11 @@ class Helper():
             if response.get('year'):
                 citation_text += (response.get('year') + '.')
 
+        citation_text = citation_text.replace('{', '')
+        citation_text = citation_text.replace('}', '')
         return citation_text
     
-    
+
 
     def create_table_row(meta_data, object_id):
         row = '<tr>'
