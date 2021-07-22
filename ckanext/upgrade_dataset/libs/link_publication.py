@@ -84,27 +84,47 @@ class Helper():
         # }
 
         if response['ENTRYTYPE'] in ['article']:
-            citation_text += (response.get('author') + ', ')
-            citation_text += ('"<i>' + response.get('title') + '</i>," ')
-            citation_text += (response.get('publisher') + '. ')
-            citation_text += (response.get('journal') + '., ')
-            citation_text += ('vol. ' + response.get('volume') + ', ')
-            citation_text += ('pp. ' + response.get('pages') + ', ')
-            citation_text += (response.get('month') + ' ' + response.get('year') + '.')
+            if response.get('author'):
+                citation_text += (response.get('author') + ', ')
+            if response.get('title'):
+                citation_text += ('"<i>' + response.get('title') + '</i>," ')
+            if response.get('publisher'):
+                citation_text += (response.get('publisher') + '. ')
+            if response.get('journal'):
+                citation_text += (response.get('journal') + '., ')
+            if response.get('volume'):
+                citation_text += ('vol. ' + response.get('volume') + ', ')
+            if response.get('pages'):
+                citation_text += ('pp. ' + response.get('pages') + ', ')
+            if response.get('month'):
+                citation_text += (response.get('month') + ' ')
+            if response.get('year'):
+                citation_text += (response.get('year') + '.')
+
         
-        elif response['ENTRYTYPE'] in ['misc']: # dataset
-            citation_text += (response.get('author') + ', ')
-            citation_text += ('"<i>' + response.get('title') + '</i>." ')
-            citation_text += (response.get('publisher') + ', ')
-            citation_text += (response.get('year') + ', ')
-            citation_text += ( 'doi: ' + response.get('doi') + '.')
+        elif response['ENTRYTYPE'] in ['misc']: 
+            if response.get('author'):
+                citation_text += (response.get('author') + ', ')
+            if response.get('title'):
+                citation_text += ('"<i>' + response.get('title') + '</i>." ')
+            if response.get('publisher'):
+                citation_text += (response.get('publisher') + ', ')
+            if response.get('year'):
+                citation_text += (response.get('year') + ', ')
+            if response.get('doi'):
+                citation_text += ( 'doi: ' + response.get('doi') + '.')
 
 
 
         return citation_text
-
-
     
+
+    def none_type_checker(arg):
+        if not arg:
+            return ''
+        return arg
+
+
     def create_table_row(meta_data, object_id):
         row = '<tr>'
         row = row +  '<td>' +  meta_data['cite'] + '</td>'        
