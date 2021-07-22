@@ -1,7 +1,7 @@
 {% import 'macros/form.html' as macro %}
  {% set action = h.url_for('link_publication.save_doi', _external=True) %}
 
-<button type="button" class="btn btn-default" data-toggle="modal" data-target="#myModal">Link Publication</button>
+<button type="button" class="btn btn-default" data-toggle="modal" data-target="#myModal">Link Reference</button>
 <input type="hidden" id="doi-validity-url" value={{h.url_for('link_publication.doi_is_valid', _external=True)}}>
 
 <div id="myModal" class="modal fade" role="dialog">
@@ -9,7 +9,7 @@
     <div class="modal-content">
       <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal">&times;</button>
-        <h4 class="modal-title">Link your Publication via the doi url</h4>
+        <h4 class="modal-title">Link a reference via the doi url</h4>
       </div>
       <div class="modal-body">  
       <form id="doi-form" class="" method="post" action='{{action}}' data-module="basic-form" enctype="multipart/form-data">      
