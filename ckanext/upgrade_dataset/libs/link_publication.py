@@ -131,7 +131,40 @@ class Helper():
                 citation_text += (response.get('publisher') + ', ')
             if response.get('year'):
                 citation_text += (response.get('year') + '.')
-            
+
+        elif response['ENTRYTYPE'] in ['inbook']:
+            if response.get('author'):
+                citation_text += (response.get('author') + ', ')
+            if response.get('title'):
+                citation_text += ('"<i>' + response.get('title') + '</i>," ')
+            if response.get('pages'):
+                citation_text += ('pp. ' + response.get('pages') + ', ')
+            if response.get('address'):
+                citation_text += (response.get('address') + ', ')
+            if response.get('publisher'):
+                citation_text += (response.get('publisher') + ', ')
+            if response.get('year'):
+                citation_text += (response.get('year') + '.')
+        
+        elif response['ENTRYTYPE'] in ['incollection']:
+            if response.get('author'):
+                citation_text += (response.get('author') + ', ')
+            if response.get('title'):
+                citation_text += ('"<i>' + response.get('title') + '</i>," ')
+            if response.get('editor'):
+                citation_text += ('In ' + response.get('editor') + ', editors, ')
+            if response.get('booktitle'):
+                citation_text += (response.get('booktitle') + ', ')
+            if response.get('pages'):
+                citation_text += ('pp. ' + response.get('pages') + ', ')
+            if response.get('publisher'):
+                citation_text += (response.get('publisher') + ', ')            
+            if response.get('address'):
+                citation_text += (response.get('address') + ', ')            
+            if response.get('year'):
+                citation_text += (response.get('year') + '.')
+        
+
 
 
         return citation_text
