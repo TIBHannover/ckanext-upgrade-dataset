@@ -25,8 +25,8 @@ class Helper():
 
 
     def parse_doi_id(url):
-        if 'doi.org/' not in url:
-            return None
+        if 'doi.org/' not in url:  # url has to be a doi ID
+            return url  
 
         temp = url.split('doi.org/')
         doi_id = temp[len(temp) - 1]
