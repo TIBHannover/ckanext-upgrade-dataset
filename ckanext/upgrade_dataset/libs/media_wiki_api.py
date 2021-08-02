@@ -23,10 +23,11 @@ class API():
     def pipeline(self):
         results = []
         machines_imageUrl = {}
-        try:
+        try:            
             self.login(self.host, self.path, self.scheme)
-            raw_results = self.site.ask(self.query)
+            raw_results = self.site.ask(self.query)                            
             for answer in raw_results:
+                print(answer)
                 processed_answer = self.unpack_ask_response(answer) 
                 results.append(processed_answer)                
                 if 'depiction' in processed_answer.keys():

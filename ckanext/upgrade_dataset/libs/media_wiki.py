@@ -77,7 +77,7 @@ class Helper():
             password = credentials[1].split('=')[1]
            
         except:
-            return []
+            return [[], []]
         
         api_call = API(username=username, password=password, query=query, host=api_host)
         results, machine_imageUrl = api_call.pipeline()
@@ -95,15 +95,15 @@ class Helper():
                         
             return [machines_list, machine_imageUrl]
         
-        return []
+        return [[], []]
     
 
     def get_api_config():
-        credential_path = '/etc/ckan/default/credentials/smw1368.txt'
-        smw_base_url = "https://service.tib.eu/sfb1368/wiki/"
-        api_host = "service.tib.eu/sfb1368"
+        credential_path = '/etc/ckan/default/credentials/smw1153.txt'
+        smw_base_url = "https://service.tib.eu/sfb1153/wiki/"
+        api_host = "service.tib.eu/sfb1153"
         ckan_root_path = toolkit.config.get('ckan.root_path')
-        if 'sfb1153/ckan' in ckan_root_path:
+        if  ckan_root_path and 'sfb1153/ckan' in ckan_root_path:
             credential_path = '/etc/ckan/default/credentials/smw1153.txt'
             smw_base_url = "https://service.tib.eu/sfb1153/wiki/"
             api_host = "service.tib.eu/sfb1153"
