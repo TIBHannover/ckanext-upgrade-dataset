@@ -14,6 +14,15 @@ function formatState (state) {
   };
 
 $(document).ready(function(){
+    let cUrl = window.location.pathname;   
+    console.info(cUrl.includes('1368/ckan'));
+    if (cUrl.includes('1368/ckan')){
+      $('#add_new_machine_btn').attr('href', 'https://service.tib.eu/sfb1368/wiki/Equipment');
+    }
+    else{
+      $('#add_new_machine_btn').attr('href', 'https://service.tib.eu/sfb1153/wiki/Equipment');
+    }
+
     $('.machine_dropdown').parent().parent().find('label').hide(); 
     $("select.machine_dropdown").select2({
         formatResult: formatState
