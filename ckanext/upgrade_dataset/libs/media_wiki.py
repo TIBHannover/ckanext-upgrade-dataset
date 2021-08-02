@@ -5,8 +5,8 @@ from ckanext.upgrade_dataset.model import ResourceMediawikiLink
 from datetime import datetime as _time
 from ckanext.upgrade_dataset.libs.media_wiki_api import API
 from urllib import parse
+import ckan.plugins.toolkit as toolkit
 
-SMW1368_BASE_url = "https://service.tib.eu/sfb1368/wiki/"
 
 class Helper():
 
@@ -68,9 +68,10 @@ class Helper():
         machines_list = []
         username = None
         password = None
+        credentials_path, smw_base_url, api_host = Helper.get_api_config()
         query = "[[Category:Equipment]]|?hasManufacturer|?hasModel|?depiction"  # all Equipments (machines and tools)
         try:
-            credentials = open('/etc/ckan/default/credentials/smw1368.txt', 'r').read()
+            credentials = open(credentials_path, 'r').read()
             credentials = credentials.split('\n')
             username = credentials[0].split('=')[1]
             password = credentials[1].split('=')[1]
@@ -78,7 +79,7 @@ class Helper():
         except:
             return []
         
-        api_call = API(username=username, password=password, query=query)
+        api_call = API(username=username, password=password, query=query, host=api_host)
         results, machine_imageUrl = api_call.pipeline()
         if results and len(results) > 0:
             temp = {}
@@ -87,7 +88,7 @@ class Helper():
             machines_list.append(temp)
             for machine in results:
                 temp = {}
-                temp['value'] = SMW1368_BASE_url + parse.quote(machine['page'])
+                temp['value'] = smw_base_url + parse.quote(machine['page'])
                 temp['text'] = machine['page']
                 temp['image'] = machine_imageUrl.get( machine['page'])
                 machines_list.append(temp)
@@ -95,6 +96,19 @@ class Helper():
             return [machines_list, machine_imageUrl]
         
         return []
+    
+
+    def get_api_config():
+        credential_path = '/etc/ckan/default/credentials/smw1368.txt'
+        smw_base_url = "https://service.tib.eu/sfb1368/wiki/"
+        api_host = "service.tib.eu/sfb1368"
+        ckan_root_path = toolkit.config.get('ckan.root_path')
+        if 'sfb1153/ckan' in ckan_root_path:
+            credential_path = '/etc/ckan/default/credentials/smw1153.txt'
+            smw_base_url = "https://service.tib.eu/sfb1153/wiki/"
+            api_host = "service.tib.eu/sfb1153"
+
+        return [credential_path, smw_base_url, api_host]
     
 
 

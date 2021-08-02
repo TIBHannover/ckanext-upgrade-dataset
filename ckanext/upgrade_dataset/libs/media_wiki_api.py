@@ -7,16 +7,17 @@ class API():
     username = None
     password = None
     site = None
-    host = "service.tib.eu/sfb1368"
+    host = ""
     path = "/wiki/"
     scheme = "https"
     query = ""
 
 
-    def __init__(self, username, password, query):
+    def __init__(self, username, password, query, host):
         self.username = username
         self.password = password
         self.query = query
+        self.host = host
     
 
     def pipeline(self):
