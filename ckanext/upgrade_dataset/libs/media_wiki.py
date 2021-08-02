@@ -103,10 +103,10 @@ class Helper():
         smw_base_url = "https://service.tib.eu/sfb1153/wiki/"
         api_host = "service.tib.eu/sfb1153"
         ckan_root_path = toolkit.config.get('ckan.root_path')
-        if  ckan_root_path and 'sfb1153/ckan' in ckan_root_path:
-            credential_path = '/etc/ckan/default/credentials/smw1153.txt'
-            smw_base_url = "https://service.tib.eu/sfb1153/wiki/"
-            api_host = "service.tib.eu/sfb1153"
+        if  ckan_root_path and 'sfb1368/ckan' in ckan_root_path:
+            credential_path = '/etc/ckan/default/credentials/smw1368.txt'
+            smw_base_url = "https://service.tib.eu/sfb1368/wiki/"
+            api_host = "service.tib.eu/sfb1368"
 
         return [credential_path, smw_base_url, api_host]
     
