@@ -20,10 +20,11 @@ package_publication_link_table = Table(
 )
 
 class PackagePublicationLink(domain_object.DomainObject):
-    def __init__(self, package_name=None, doi=None, create_at=None):
+    def __init__(self, package_name=None, doi=None, create_at=None, citation=None):
         self.package_name = package_name
         self.doi = doi        
         self.create_at = create_at
+        self.citation = citation
 
     
     @classmethod

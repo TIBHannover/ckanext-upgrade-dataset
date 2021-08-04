@@ -20,8 +20,10 @@ class LinkPublicationController():
         if package_id and doi and Helper.check_doi_validity(doi) == True:
             package = toolkit.get_action('package_show')({}, {'name_or_id': package_id})
             try:
-                record = PackagePublicationLink(package_name=package['name'], doi=doi, create_at = _time.now())
-                record.save()
+                citation = Helper.process_doi_link(doi)
+                if citation:
+                    record = PackagePublicationLink(package_name=package['name'], doi=doi, create_at = _time.now(), citation=citation.get('cite'))
+                    record.save()
                 return  redirect(h.url_for('dataset.read', id=str(package_id) ,  _external=True))   
             except:
                 return toolkit.abort(403, "bad request")
@@ -38,7 +40,8 @@ class LinkPublicationController():
         if result == false:
             return '0'
         for source in result:
-            meta_data = Helper.process_doi_link(source.doi)
+            meta_data = {}
+            meta_data['cite'] = source.citation
             if meta_data:
                 meta_data['link'] = source.doi
                 return_rows += Helper.create_table_row(meta_data, source.id)
