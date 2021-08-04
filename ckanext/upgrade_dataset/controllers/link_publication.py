@@ -1,7 +1,7 @@
 # encoding: utf-8
 
 from flask import redirect, request
-from sqlalchemy.sql.expression import false
+from sqlalchemy.sql.expression import false, null
 import ckan.lib.helpers as h
 import ckan.plugins.toolkit as toolkit
 from ckanext.upgrade_dataset.model import PackagePublicationLink
@@ -34,12 +34,15 @@ class LinkPublicationController():
 
 
     def get_publication(name):        
+        Helper.fill_null_citation(name)
         res_object = PackagePublicationLink(package_name=name)
         result = res_object.get_by_package(name=name)
         return_rows = ""
         if result == false:
             return '0'
         for source in result:
+            if not source.citation:
+                continue
             meta_data = {}
             meta_data['cite'] = source.citation
             if meta_data:

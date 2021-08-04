@@ -1,12 +1,11 @@
 # encoding: utf-8
 
-from werkzeug.datastructures import Headers
-from ckanext.upgrade_dataset import model
-from flask.globals import request
+from sqlalchemy.sql.expression import false, null
 import ckan.plugins.toolkit as toolkit
-import urllib.request, json 
+import urllib.request
 import ckan.lib.helpers as h
 import bibtexparser
+from ckanext.upgrade_dataset.model.package_publication_link import PackagePublicationLink
 
 
 Base_doi_api_url = "http://dx.doi.org/"
@@ -48,8 +47,7 @@ class Helper():
             return None
 
 
-    def process_doi_link(doi_link):
-               
+    def process_doi_link(doi_link):               
         try:            
             doi_id = Helper.parse_doi_id(doi_link)
             dest_url = Base_doi_api_url + doi_id
@@ -57,15 +55,33 @@ class Helper():
             if response:                        
                 processed_result = {}
                 processed_result['cite'] = Helper.create_citation(response)
-                return processed_result
-            
+                return processed_result            
             else:
-                return None
-        
+                return None        
         except:
             return None
     
-    
+
+    '''
+        fill null citations for a dataset
+    '''
+    def fill_null_citation(package):
+        try:
+            res_object = PackagePublicationLink(package_name=package)
+            result = res_object.get_by_package(name=package)
+            if result == false:
+                return False
+
+            for source in result:                        
+                if not source.citation or source.citation == null:
+                    source.citation = Helper.process_doi_link(source.doi).get('cite')
+                    source.commit()
+        except:
+            return False
+
+        return True
+
+
     def create_citation(response):
         citation_text = ""
 
