@@ -82,6 +82,44 @@ class Helper():
         return True
 
 
+
+    def check_doi_validity(doi_url):        
+        doi = Helper.parse_doi_id(doi_url)
+        if not doi:
+            return 'url not vaid'
+        dest_url = Base_doi_api_url + doi
+        response = Helper.call_api(dest_url)
+        if response:
+            return True
+
+        return None
+    
+
+    def get_publication_types_dropdown_content():
+        publication_types = []
+        Types = ['article', 
+            'conference', 
+            'inproceedings', 
+            'proceedings', 
+            'inbook', 
+            'incollection', 
+            'book', 
+            'masterthesis', 
+            'phdthesis',
+            'techreport',
+            'Other'
+            ]
+        start_value = 0
+        for t in Types:
+            temp = {}
+            temp['value'] = t
+            temp['text'] = t
+            publication_types.append(temp)
+
+        return publication_types
+
+
+
     def create_citation(response):
         citation_text = ""
 
@@ -235,17 +273,6 @@ class Helper():
         row = row +  '</tr>'
         return row
     
-
-    def check_doi_validity(doi_url):        
-        doi = Helper.parse_doi_id(doi_url)
-        if not doi:
-            return 'url not vaid'
-        dest_url = Base_doi_api_url + doi
-        response = Helper.call_api(dest_url)
-        if response:
-            return True
-
-        return None
 
 
     def create_delete_modal(object_id):

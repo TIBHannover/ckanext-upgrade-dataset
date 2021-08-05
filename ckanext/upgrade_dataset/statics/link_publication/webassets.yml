@@ -16,3 +16,8 @@ publication-info-table-css:
   output: ckanext-upgrade-dataset/%(version)s_my.css
   contents:
     - publication_info.css
+
+publication-add-manually-css:
+  output: ckanext-upgrade-dataset/%(version)s_my.css
+  contents:
+    - add_manually.css

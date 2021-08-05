@@ -1,0 +1,32 @@
+{% extends "package/read.html" %}
+{% import 'macros/form.html' as macro %}
+
+
+{% block primary_content_inner %}
+  {% asset 'ckanext-upgrade-dataset-link-publication/publication-add-manually-css' %}
+
+  <div class="row">
+    <div class="col-sm-12">
+
+        {{ macro.select('pub-type', 
+            id='pub-type', 
+            label = "Reference Type",                 
+            options=publication_types, selected='article', classes=[], attrs={'class': 'pub-type-select'}, is_required=true) 
+        }}
+
+        {{ macro.input('title',
+            id='pub-title',
+            label=_('Title'),                           
+            classes=['control-full']) 
+        }}
+
+
+
+    </div>
+  </div>
+
+
+
+
+
+{% endblock %}

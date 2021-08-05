@@ -1,6 +1,6 @@
 # encoding: utf-8
 
-from flask import redirect, request
+from flask import redirect, request, render_template
 from sqlalchemy.sql.expression import false, null
 import ckan.lib.helpers as h
 import ckan.plugins.toolkit as toolkit
@@ -82,6 +82,9 @@ class LinkPublicationController():
             return toolkit.abort(403, "bad request")
     
 
-    def add_publication_manually():
+    def add_publication_manually(package_name):
+        package = toolkit.get_action('package_show')({}, {'name_or_id': package_name})
+        publication_types = Helper.get_publication_types_dropdown_content()
+        
 
-        return '0'
+        return render_template('add_manually.html', pkg_dict=package, publication_types=publication_types)
