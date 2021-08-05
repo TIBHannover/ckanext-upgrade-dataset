@@ -6,6 +6,7 @@ import urllib.request
 import ckan.lib.helpers as h
 import bibtexparser
 from ckanext.upgrade_dataset.model.package_publication_link import PackagePublicationLink
+from datetime import datetime
 
 
 Base_doi_api_url = "http://dx.doi.org/"
@@ -117,6 +118,30 @@ class Helper():
             publication_types.append(temp)
 
         return publication_types
+
+    
+    def get_years_list():
+        years = []
+        current_year = datetime.now().year
+        for i in list(reversed(range(1900, current_year + 1))):
+            temp = {}
+            temp['value'] = i
+            temp['text'] = i
+            years.append(temp)
+        return years
+
+    
+    def get_month_list():
+        months = []
+        texts = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December']
+        values = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']
+        for i in range(0, 12):
+            temp = {}
+            temp['value'] = values[i]
+            temp['text'] = texts[i]
+            months.append(temp)
+
+        return months
 
 
 

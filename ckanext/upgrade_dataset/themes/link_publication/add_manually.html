@@ -16,9 +16,76 @@
 
         {{ macro.input('title',
             id='pub-title',
+            type='text',
             label=_('Title'),                           
             classes=['control-full']) 
         }}
+
+        {{ macro.input('author',
+            id='authors',
+            type='text',
+            label=_('Author(s): Please separate authors names with semicolon (;) '),
+            placeholder = "Example:  Author1;Author2;Author3",            
+            classes=['control-full']) 
+        }}
+
+        <div class="row">
+            <div class="col-sm-3">
+                {{ macro.select('year', 
+                    id='years-select', 
+                    label = "Year",                 
+                    options=years, classes=[], attrs={'class': 'years-select'}) 
+                }}
+            </div>
+            <div class="col-sm-9">
+                {{ macro.input('publisher',
+                    id='publisher',
+                    type='text',
+                    label=_('Publisher'),                    
+                    classes=['control-full']) 
+                }}
+            </div>
+        </div>
+
+        <section id='article-section'>
+            <div class='row'>
+                <div class="col-sm-12">
+                    {{ macro.input('article-journal',
+                        id='journal',
+                        type='text',
+                        label=_('Journal'),                    
+                        classes=['control-full']) 
+                    }}
+                </div>
+            </div>
+            <div class='row'>
+                <div class="col-sm-4">
+                    {{ macro.input('volume',
+                        id='article-volume',
+                        type='text',
+                        label=_('Volume'),                    
+                        classes=['control-full']) 
+                    }}
+                </div>
+                <div class="col-sm-4">
+                    {{ macro.input('pages',
+                        id='article-pages',
+                        type='text',
+                        label=_('Pages'),
+                        placeholder="Example: 23-35",                    
+                        classes=['control-full']) 
+                    }}
+                </div>
+                <div class="col-sm-3">
+                    {{ macro.select('month', 
+                        id='article-month', 
+                        label = "Month",                 
+                        options=months, classes=[], attrs={'class': 'years-select'}) 
+                    }}
+                </div>
+            </div>
+        </section>
+
 
 
 

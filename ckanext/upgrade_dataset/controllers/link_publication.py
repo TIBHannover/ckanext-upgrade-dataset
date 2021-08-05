@@ -85,6 +85,12 @@ class LinkPublicationController():
     def add_publication_manually(package_name):
         package = toolkit.get_action('package_show')({}, {'name_or_id': package_name})
         publication_types = Helper.get_publication_types_dropdown_content()
-        
+        years = Helper.get_years_list()
+        months = Helper.get_month_list()
 
-        return render_template('add_manually.html', pkg_dict=package, publication_types=publication_types)
+        return render_template('add_manually.html', 
+            pkg_dict=package, 
+            publication_types=publication_types,
+            years=years,
+            months=months
+            )
