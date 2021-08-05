@@ -80,3 +80,8 @@ class LinkPublicationController():
 
         except:
             return toolkit.abort(403, "bad request")
+    
+
+    def add_publication_manually():
+
+        return '0'
