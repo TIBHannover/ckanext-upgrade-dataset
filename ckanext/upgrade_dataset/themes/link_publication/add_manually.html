@@ -86,6 +86,47 @@
             </div>
         </section>
 
+        <section id='conference-section'>
+            <div class='row'>
+                <div class="col-sm-6">
+                    {{ macro.input('booktitle',
+                        id='conf-booktitle',
+                        type='text',
+                        label=_('Book Title'),                    
+                        classes=['control-full']) 
+                    }}
+                </div>
+                <div class="col-sm-6">
+                    {{ macro.input('series',
+                        id='conf-series',
+                        type='text',
+                        label=_('Series'),
+                        classes=['control-full']) 
+                    }}
+                </div>                
+            </div>
+            <div class='row'>
+                <div class="col-sm-8">
+                    {{ macro.input('address',
+                        id='conf-addrress',
+                        type='text',
+                        label=_('Address'),                    
+                        classes=['control-full']) 
+                    }}
+                </div>
+                <div class="col-sm-4">
+                    {{ macro.input('pages',
+                        id='conf-pages',
+                        type='text',
+                        label=_('Pages'),
+                        placeholder="Example: 23-35",                    
+                        classes=['control-full']) 
+                    }}
+                </div>                
+            </div>
+        
+        </section>
+
 
 
 
