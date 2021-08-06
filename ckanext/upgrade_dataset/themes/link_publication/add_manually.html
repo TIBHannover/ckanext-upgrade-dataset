@@ -8,7 +8,9 @@
 
   <div class="row">
     <div class="col-sm-12">
-
+        <h3>{{_('Please enter the data about your Reference.')}}</h3>
+        <b><i><p>{{_('* mandatory fields')}}</p></i></b>
+        <br>
         {{ macro.select('pub-type', 
             id='pub-type', 
             label = "Reference Type",                 
@@ -19,7 +21,9 @@
             id='pub-title',
             type='text',
             label=_('Title'),                           
-            classes=['control-full']) 
+            classes=['control-full'],
+            is_required=true
+            )             
         }}
 
         {{ macro.input('author',
@@ -27,7 +31,9 @@
             type='text',
             label=_('Author(s): Please separate authors names with semicolon (;) '),
             placeholder = "Example:  Author1;Author2;Author3",            
-            classes=['control-full']) 
+            classes=['control-full'],
+            is_required=true
+            ) 
         }}
 
         <div class="row">
@@ -35,7 +41,7 @@
                 {{ macro.select('year', 
                     id='years-select', 
                     label = "Year",                 
-                    options=years, classes=[], attrs={'class': 'years-select'}) 
+                    options=years, classes=[], attrs={'class': 'years-select'}, is_required=true) 
                 }}
             </div>
             <div class="col-sm-9">
@@ -274,6 +280,13 @@
                 </div>                
             </div>
         </section>
+
+        <div class="row">
+            <div class="col-sm-12 form-actions">
+                <button class="btn btn-default" id="cancel-btn">{{_('Cancel')}}</button>
+                <button class="btn btn-primary" id="save-btn">{{_('Save')}}</button>
+            </div>
+        </div>
 
 
 
