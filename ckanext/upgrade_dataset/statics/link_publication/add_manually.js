@@ -42,14 +42,14 @@ $(document).ready(function(){
     $('#save-btn').click(function(){        
         let form_validity = form_validator();
         if(form_validity){
-
-        }
-        
+            send_data();
+        }        
     });
 
 
 
 });
+
 
 function form_validator(){
     let result = true;
@@ -75,18 +75,22 @@ function form_validator(){
     return result;
 }
 
+
 function send_data(){
+    var formdata = new FormData();
     let pubType = $('#pub-type').select2('data').text;
-    let pubTitle = $('#pub-title').val();
-    let pubAuthors =  $('#authors').val();
-    let pubYear = $('#years-select').select2('data').text;
-    let publisher = $('#publisher').val();
+    formdata.set('type', pubType);
+    formdata.set('title', $('#pub-title').val()); 
+    formdata.set('author', $('#authors').val());
+    formdata.set('year', $('#years-select').select2('data').text);
+    formdata.set('publisher', $('#publisher').val());
    
     if (pubType == 'article'){
-        let journal = $('#article-journal').val();
-        let volume = $('#article-volume').val();
-        let pages = $('#article-pages').val();
-        let month = $('#article-month').select2('data').text;
+        formdata.set('journal', $('#article-journal').val());
+        formdata.set('volume', $('#article-volume').val());
+        formdata.set('page', $('#article-pages').val());
+        formdata.set('month', $('#article-month').select2('data').text);
+        send_request(formdata);
 
     }
     else if (pubType == 'techreport'){
@@ -128,4 +132,11 @@ function send_data(){
     else{
         // other types
     }
+}
+
+function send_request(data){
+    let dest_url = '';
+    let req = new XMLHttpRequest();
+    req.open("POST", dest_url);
+    req.send(data);
 }
