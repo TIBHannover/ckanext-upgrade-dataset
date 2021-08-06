@@ -39,6 +39,35 @@ $(document).ready(function(){
 
     });
 
+    $('#save-btn').click(function(){        
+        form_validator();
+        
+    });
+
 
 
 });
+
+function form_validator(){
+    let result = true;
+    $('.pub-type-select').css('border', '');
+    $('#pub-title').css('border', '');
+    $('#authors').css('border', '');
+    if ($('#pub-type').select2('data') == null){        
+        $('.pub-type-select').css('border', '2px solid red');
+        result = false;
+    }
+    if ($('#pub-title').val() == ''){        
+        $('#pub-title').css('border', '2px solid red');
+        result = false;
+    }
+    if ($('#authors').val() == ''){        
+        $('#authors').css('border', '2px solid red');
+        result = false;
+    }
+    if(!result){
+        $('#mandatory-text').css('color', 'red');
+    }
+
+    return result;
+}

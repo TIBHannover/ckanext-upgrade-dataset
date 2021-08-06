@@ -9,7 +9,7 @@
   <div class="row">
     <div class="col-sm-12">
         <h3>{{_('Please enter the data about your Reference.')}}</h3>
-        <b><i><p>{{_('* mandatory fields')}}</p></i></b>
+        <b><i><p id="mandatory-text">{{_('* mandatory fields')}}</p></i></b>
         <br>
         {{ macro.select('pub-type', 
             id='pub-type', 
@@ -288,14 +288,7 @@
             </div>
         </div>
 
-
-
-
     </div>
   </div>
-
-
-
-
 
 {% endblock %}
