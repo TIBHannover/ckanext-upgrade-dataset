@@ -12,7 +12,7 @@
         {{ macro.select('pub-type', 
             id='pub-type', 
             label = "Reference Type",                 
-            options=publication_types, selected='article', classes=[], attrs={'class': 'pub-type-select'}, is_required=true) 
+            options=publication_types, selected='', classes=[], attrs={'class': 'pub-type-select'}, is_required=true) 
         }}
 
         {{ macro.input('title',
@@ -48,7 +48,7 @@
             </div>
         </div>
 
-        <section id='article-section'>
+        <section id='article-section' class='pub-type-section'>
             <div class='row'>
                 <div class="col-sm-12">
                     {{ macro.input('article-journal',
@@ -87,7 +87,7 @@
             </div>
         </section>
 
-        <section id='conference-section'>
+        <section id='conference-section' class='pub-type-section'>
             <div class='row'>
                 <div class="col-sm-6">
                     {{ macro.input('conf-booktitle',
@@ -128,7 +128,7 @@
         
         </section>
 
-        <section id="inbook-section">
+        <section id="inbook-section" class='pub-type-section'>
             <div class="row">
                 <div class="col-sm-3">
                     {{ macro.input('inbook-pages',
@@ -150,7 +150,7 @@
             </div>
         </section>
 
-        <section id="incollecion-section">
+        <section id="incollecion-section" class='pub-type-section'>
             <div class="row">
                 <div class=col-sm-12>
                     {{ macro.input('incollecion-editor',
@@ -194,7 +194,7 @@
 
         </section>
 
-        <section id="book-section">
+        <section id="book-section" class='pub-type-section'>
             <div class="row">
                 <div class="col-sm-12">
                     {{ macro.input('book-address',
@@ -207,7 +207,7 @@
             </div>
         </section>
 
-        <section id="thesis-section">
+        <section id="thesis-section" class='pub-type-section'>
             <div class="row">
                 <div class="col-sm-4">
                     {{ macro.select('thesis-month', 
@@ -237,7 +237,7 @@
             </div>
         </section>
 
-        <section id="section-tech-report">
+        <section id="section-tech-report" class='pub-type-section'>
             <div class="row">
                 <div class="col-sm-4">
                     {{ macro.input('report-number',

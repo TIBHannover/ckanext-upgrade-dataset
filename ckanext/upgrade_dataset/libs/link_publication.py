@@ -98,7 +98,8 @@ class Helper():
 
     def get_publication_types_dropdown_content():
         publication_types = []
-        Types = ['article', 
+        Types = ['',
+            'article', 
             'conference', 
             'inproceedings', 
             'proceedings', 
