@@ -21,3 +21,17 @@ publication-add-manually-css:
   output: ckanext-upgrade-dataset/%(version)s_my.css
   contents:
     - add_manually.css
+
+publication-add-manually-js:  
+  output: ckanext-upgrade-dataset/%(version)s_my.js
+  extra:
+    preload:
+      - base/main
+      - vendor/vendor
+      - vendor/bootstrap
+      - vendor/jquery
+      - vendor/jquery.ui.core
+      - vendor/select2
+  contents:
+    - add_manually.js
+
