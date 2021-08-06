@@ -40,7 +40,10 @@ $(document).ready(function(){
     });
 
     $('#save-btn').click(function(){        
-        form_validator();
+        let form_validity = form_validator();
+        if(form_validity){
+
+        }
         
     });
 
@@ -70,4 +73,59 @@ function form_validator(){
     }
 
     return result;
+}
+
+function send_data(){
+    let pubType = $('#pub-type').select2('data').text;
+    let pubTitle = $('#pub-title').val();
+    let pubAuthors =  $('#authors').val();
+    let pubYear = $('#years-select').select2('data').text;
+    let publisher = $('#publisher').val();
+   
+    if (pubType == 'article'){
+        let journal = $('#article-journal').val();
+        let volume = $('#article-volume').val();
+        let pages = $('#article-pages').val();
+        let month = $('#article-month').select2('data').text;
+
+    }
+    else if (pubType == 'techreport'){
+        let reportNumber = $('#report-number').val();
+        let institution = $('#report-ins').val();
+        let month = $('#report-month').select2('data').text;
+        let address = $('#report-address').val();
+
+    }
+    else if (['conference', 'inproceedings', 'proceedings'].includes(pubType)){
+        let bookTitle = $('#conf-booktitle').val();
+        let series = $('#conf-series').val();
+        let address = $('#conf-address').val();
+        let pages = $('#conf-pages').val();
+
+    }
+    else if (pubType == 'inbook'){
+        let address = $('#inbook-address').val();
+        let pages = $('#inbook-pages').val();
+
+    }
+    else if (pubType == 'incollection'){
+        let editors = $('#incollecion-editor').val();
+        let address = $('#incollecion-address').val();
+        let pages = $('#incollecion-pages').val();
+        let bookTitle = $('#incollecion-booktitle').val();
+
+    }
+    else if (pubType == 'book'){
+        let address = $('#book-address').val();
+
+    }
+    else if (['masterthesis', 'phdthesis'].includes(pubType)){
+        let address = $('#thesis-address').val();
+        let month = $('#thesis-month').select2('data').text;
+        let school = $('#thesis-school').val();
+
+    }
+    else{
+        // other types
+    }
 }
