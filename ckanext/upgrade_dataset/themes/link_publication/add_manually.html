@@ -5,6 +5,9 @@
 {% block primary_content_inner %}
   {% asset 'ckanext-upgrade-dataset-link-publication/publication-add-manually-css' %}
   {% asset 'ckanext-upgrade-dataset-link-publication/publication-add-manually-js' %}
+  {% set action = h.url_for('link_publication.save_publication_manually', _external=True) %}
+  <input type="hidden" id="package" value={{pkg_dict.name}}>
+  <input type="hidden" id="dest_url" value={{action}}>
 
   <div class="row">
     <div class="col-sm-12">

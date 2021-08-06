@@ -79,6 +79,7 @@ function form_validator(){
 function send_data(){
     var formdata = new FormData();
     let pubType = $('#pub-type').select2('data').text;
+    formdata.set('package', $('#package').val());
     formdata.set('type', pubType);
     formdata.set('title', $('#pub-title').val()); 
     formdata.set('author', $('#authors').val());
@@ -135,7 +136,7 @@ function send_data(){
 }
 
 function send_request(data){
-    let dest_url = '';
+    let dest_url = $('#dest_url').val();
     let req = new XMLHttpRequest();
     req.open("POST", dest_url);
     req.send(data);
