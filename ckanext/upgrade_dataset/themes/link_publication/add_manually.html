@@ -51,7 +51,7 @@
             <div class='row'>
                 <div class="col-sm-12">
                     {{ macro.input('article-journal',
-                        id='journal',
+                        id='article-journal',
                         type='text',
                         label=_('Journal'),                    
                         classes=['control-full']) 
@@ -60,7 +60,7 @@
             </div>
             <div class='row'>
                 <div class="col-sm-4">
-                    {{ macro.input('volume',
+                    {{ macro.input('article-volume',
                         id='article-volume',
                         type='text',
                         label=_('Volume'),                    
@@ -68,7 +68,7 @@
                     }}
                 </div>
                 <div class="col-sm-4">
-                    {{ macro.input('pages',
+                    {{ macro.input('article-pages',
                         id='article-pages',
                         type='text',
                         label=_('Pages'),
@@ -77,7 +77,7 @@
                     }}
                 </div>
                 <div class="col-sm-3">
-                    {{ macro.select('month', 
+                    {{ macro.select('article-month', 
                         id='article-month', 
                         label = "Month",                 
                         options=months, classes=[], attrs={'class': 'years-select'}) 
@@ -89,7 +89,7 @@
         <section id='conference-section'>
             <div class='row'>
                 <div class="col-sm-6">
-                    {{ macro.input('booktitle',
+                    {{ macro.input('conf-booktitle',
                         id='conf-booktitle',
                         type='text',
                         label=_('Book Title'),                    
@@ -97,7 +97,7 @@
                     }}
                 </div>
                 <div class="col-sm-6">
-                    {{ macro.input('series',
+                    {{ macro.input('conf-series',
                         id='conf-series',
                         type='text',
                         label=_('Series'),
@@ -107,7 +107,7 @@
             </div>
             <div class='row'>
                 <div class="col-sm-8">
-                    {{ macro.input('address',
+                    {{ macro.input('conf-address',
                         id='conf-addrress',
                         type='text',
                         label=_('Address'),                    
@@ -115,7 +115,7 @@
                     }}
                 </div>
                 <div class="col-sm-4">
-                    {{ macro.input('pages',
+                    {{ macro.input('conf-pages',
                         id='conf-pages',
                         type='text',
                         label=_('Pages'),
@@ -125,6 +125,85 @@
                 </div>                
             </div>
         
+        </section>
+
+        <section id="inbook-section">
+            <div class="row">
+                <div class="col-sm-3">
+                    {{ macro.input('inbook-pages',
+                        id='inbook-pages',
+                        type='text',
+                        label=_('Pages'),
+                        placeholder="Example: 23-35",                    
+                        classes=['control-full']) 
+                    }}
+                </div>
+                <div class="col-sm-9">
+                    {{ macro.input('inbook-address',
+                        id='inbook-addrress',
+                        type='text',
+                        label=_('Address'),                    
+                        classes=['control-full']) 
+                    }}
+                </div>
+            </div>
+        </section>
+
+        <section id="incollecion-section">
+            <div class="row">
+                <div class=col-sm-12>
+                    {{ macro.input('incollecion-editor',
+                        id='incollecion-editor',
+                        type='text',
+                        label=_('Editor(s): Please separate editors names with semicolon (;) '),
+                        placeholder = "Example:  Editor1;Editor2;Editor3",            
+                        classes=['control-full']) 
+                    }}
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-sm-4">
+                    {{ macro.input('incollecion--pages',
+                        id='incollecion--pages',
+                        type='text',
+                        label=_('Pages'),
+                        placeholder="Example: 23-35",                    
+                        classes=['control-full']) 
+                    }}
+                </div>
+                <div class="col-sm-8">
+                    {{ macro.input('incollecion-booktite',
+                        id='incollecion-booktite',
+                        type='text',
+                        label=_('Book Title'),                    
+                        classes=['control-full']) 
+                    }}
+                </div>                
+            </div>
+            <div class="row">
+                <div class="col-sm-12">
+                    {{ macro.input('incollecion-address',
+                        id='incollecion-address',
+                        type='text',
+                        label=_('Address'),                    
+                        classes=['control-full']) 
+                    }}
+                </div>
+            </div>
+
+        </section>
+
+        <section id="book-section">
+            <div class="row">
+                <div class="col-sm-12">
+                    {{ macro.input('book-address',
+                        id='book-address',
+                        type='text',
+                        label=_('Address'),                    
+                        classes=['control-full']) 
+                    }}
+                </div>
+            </div>
         </section>
 
 
