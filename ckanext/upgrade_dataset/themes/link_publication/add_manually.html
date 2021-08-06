@@ -206,6 +206,74 @@
             </div>
         </section>
 
+        <section id="thesis-section">
+            <div class="row">
+                <div class="col-sm-4">
+                    {{ macro.select('thesis-month', 
+                        id='thesis-month', 
+                        label = "Month",                 
+                        options=months, classes=[], attrs={'class': 'years-select'}) 
+                    }}
+                </div>
+                <div class="col-sm-8">
+                    {{ macro.input('thesis-school',
+                        id='thesis-school',
+                        type='text',
+                        label=_('School'),                    
+                        classes=['control-full']) 
+                    }}
+                </div>                
+            </div>
+            <div class="row">
+                <div class="col-sm-12">
+                    {{ macro.input('school-address',
+                        id='school-address',
+                        type='text',
+                        label=_('Address'),                    
+                        classes=['control-full']) 
+                    }}
+                </div>
+            </div>
+        </section>
+
+        <section id="section-tech-report">
+            <div class="row">
+                <div class="col-sm-4">
+                    {{ macro.input('report-number',
+                        id='report-number',
+                        type='text',
+                        label=_('Report Number'),                    
+                        classes=['control-full']) 
+                    }}
+                </div>
+                <div class="col-sm-8">
+                    {{ macro.input('report-ins',
+                        id='report-ins',
+                        type='text',
+                        label=_('Institution'),                    
+                        classes=['control-full']) 
+                    }}
+                </div>                
+            </div>
+           <div class="row">
+                <div class="col-sm-4">
+                    {{ macro.select('report-month', 
+                        id='report-month', 
+                        label = "Month",                 
+                        options=months, classes=[], attrs={'class': 'years-select'}) 
+                    }}
+                </div>
+                <div class="col-sm-8">
+                    {{ macro.input('report-address',
+                        id='report-address',
+                        type='text',
+                        label=_('Address'),                    
+                        classes=['control-full']) 
+                    }}
+                </div>                
+            </div>
+        </section>
+
 
 
 
