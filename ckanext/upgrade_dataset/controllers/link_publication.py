@@ -98,64 +98,22 @@ class LinkPublicationController():
     
 
     def save_publication_manually():
-        package_name = request.form.get('package')
-        if package_name:
-            package = toolkit.get_action('package_show')({}, {'name_or_id': package_name})
-            Helper.check_access_edit_package(package['id'])
-            reference = {}
-            reference['ENTRYTYPE'] = request.form.get('type')
-            reference['title'] = request.form.get('title')
-            reference['author'] = request.form.get('author')
-            reference['year'] = request.form.get('year')
-            reference['publisher'] = request.form.get('publisher')
+        try:
+            package_name = request.form.get('package')
+            if package_name:
+                package = toolkit.get_action('package_show')({}, {'name_or_id': package_name})
+                Helper.check_access_edit_package(package['id'])
+                reference = Helper.process_publication_manual_metadata(request)
+                citation = Helper.create_citation(reference)
+                if citation != "":
+                    record = PackagePublicationLink(package_name=package_name, doi='', create_at = _time.now(), citation=citation)
+                    record.save()                    
 
-            if reference['ENTRYTYPE'] == 'article':
-                reference['journal'] = request.form.get('journal')
-                reference['volume'] = request.form.get('volume')
-                reference['pages'] = request.form.get('page')
-                reference['month'] = request.form.get('month')
+                return h.url_for('dataset.read', id=str(package['id']) ,  _external=True)
 
-            elif reference['ENTRYTYPE'] in ['conference', 'inproceedings', 'proceedings']:
-                reference['booktitle'] = request.form.get('booktitle')
-                reference['pages'] = request.form.get('pages')
-                reference['address'] = request.form.get('address')
-                reference['series'] = request.form.get('series')
-            
-            elif reference['ENTRYTYPE'] == 'techreport':
-                reference['number'] = request.form.get('number')
-                reference['institutaion'] = request.form.get('institutaion')
-                reference['address'] = request.form.get('address')
-                reference['month'] = request.form.get('month')
-            
-            elif reference['ENTRYTYPE'] == 'inbook':
-                reference['pages'] = request.form.get('pages')                
-                reference['address'] = request.form.get('address')
-
-            elif reference['ENTRYTYPE'] == 'book':                           
-                reference['address'] = request.form.get('address')
-            
-            elif reference['ENTRYTYPE'] == 'incollection':
-                reference['booktitle'] = request.form.get('booktitle')
-                reference['pages'] = request.form.get('pages')
-                reference['address'] = request.form.get('address')
-                reference['editor'] = request.form.get('editor')
-            
-            elif reference['ENTRYTYPE'] in ['masterthesis', 'phdthesis']:
-                reference['school'] = request.form.get('institutaion')
-                reference['address'] = request.form.get('address')
-                reference['month'] = request.form.get('month')
-            
             else:
-                reference['ENTRYTYPE'] = 'misc'
-                reference['doi'] = ''
+                toolkit.abort(403, "package not specefied")
             
+        except:
+            toolkit.abort(500, "We caanot process your request at this moment")
 
-            citation = Helper.create_citation(reference)
-            return citation
-        
-
-
-        else:
-            toolkit.abort(403, "package not specefied")
-
-        return '0'

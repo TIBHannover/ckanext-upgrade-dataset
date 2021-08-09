@@ -94,6 +94,57 @@ class Helper():
             return True
 
         return None
+
+    def process_publication_manual_metadata(request):
+        reference = {}
+        reference['ENTRYTYPE'] = request.form.get('type')
+        reference['title'] = request.form.get('title')
+        reference['author'] = request.form.get('author')
+        reference['year'] = request.form.get('year')
+        reference['publisher'] = request.form.get('publisher')
+
+        if reference['ENTRYTYPE'] == 'article':
+            reference['journal'] = request.form.get('journal')
+            reference['volume'] = request.form.get('volume')
+            reference['pages'] = request.form.get('page')
+            reference['month'] = request.form.get('month')
+
+        elif reference['ENTRYTYPE'] in ['conference', 'inproceedings', 'proceedings']:
+            reference['booktitle'] = request.form.get('booktitle')
+            reference['pages'] = request.form.get('pages')
+            reference['address'] = request.form.get('address')
+            reference['series'] = request.form.get('series')
+        
+        elif reference['ENTRYTYPE'] == 'techreport':
+            reference['number'] = request.form.get('number')
+            reference['institutaion'] = request.form.get('institutaion')
+            reference['address'] = request.form.get('address')
+            reference['month'] = request.form.get('month')
+        
+        elif reference['ENTRYTYPE'] == 'inbook':
+            reference['pages'] = request.form.get('pages')                
+            reference['address'] = request.form.get('address')
+
+        elif reference['ENTRYTYPE'] == 'book':                           
+            reference['address'] = request.form.get('address')
+        
+        elif reference['ENTRYTYPE'] == 'incollection':
+            reference['booktitle'] = request.form.get('booktitle')
+            reference['pages'] = request.form.get('pages')
+            reference['address'] = request.form.get('address')
+            reference['editor'] = request.form.get('editor')
+        
+        elif reference['ENTRYTYPE'] in ['masterthesis', 'phdthesis']:
+            reference['school'] = request.form.get('institutaion')
+            reference['address'] = request.form.get('address')
+            reference['month'] = request.form.get('month')
+        
+        else:
+            reference['ENTRYTYPE'] = 'misc'
+            reference['doi'] = ''
+
+        return reference
+
     
 
     def get_publication_types_dropdown_content():
@@ -110,8 +161,7 @@ class Helper():
             'phdthesis',
             'techreport',
             'Other'
-            ]
-        start_value = 0
+            ]        
         for t in Types:
             temp = {}
             temp['value'] = t

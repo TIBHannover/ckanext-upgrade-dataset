@@ -144,6 +144,11 @@ function send_data(){
 function send_request(data){
     let dest_url = $('#dest_url').val();
     let req = new XMLHttpRequest();
+    req.onreadystatechange = function() {
+        if (req.readyState == XMLHttpRequest.DONE && req.status === 200) {       
+            window.location.replace(this.responseText);                                 
+        }
+    }
     req.open("POST", dest_url);
     req.send(data);
 }
