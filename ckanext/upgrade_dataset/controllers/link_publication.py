@@ -100,8 +100,11 @@ class LinkPublicationController():
     def save_publication_manually():
         try:
             package_name = request.form.get('package')
-            if package_name:
-                package = toolkit.get_action('package_show')({}, {'name_or_id': package_name})
+            package = toolkit.get_action('package_show')({}, {'name_or_id': package_name})
+            if request.form.get('cancel'):
+                return h.url_for('dataset.read', id=str(package['id']) ,  _external=True)
+                
+            if package_name:                
                 Helper.check_access_edit_package(package['id'])
                 reference = Helper.process_publication_manual_metadata(request)
                 citation = Helper.create_citation(reference)
@@ -115,5 +118,5 @@ class LinkPublicationController():
                 toolkit.abort(403, "package not specefied")
             
         except:
-            toolkit.abort(500, "We caanot process your request at this moment")
+            toolkit.abort(500, "We cannot process your request at this moment")
 

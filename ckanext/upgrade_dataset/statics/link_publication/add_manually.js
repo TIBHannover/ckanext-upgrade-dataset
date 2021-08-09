@@ -46,7 +46,9 @@ $(document).ready(function(){
         }        
     });
 
-
+    $('#cancel-btn').click(function(){        
+        send_data(true);        
+    });
 
 });
 
@@ -76,8 +78,14 @@ function form_validator(){
 }
 
 
-function send_data(){
+function send_data(is_cancel=false){
     var formdata = new FormData();
+    if (is_cancel){
+        formdata.set('cancel', '1');
+        formdata.set('package', $('#package').val());
+        send_request(formdata);
+        return 1;
+    }
     let pubType = $('#pub-type').select2('data').text;    
     formdata.set('package', $('#package').val());
     formdata.set('type', pubType);
