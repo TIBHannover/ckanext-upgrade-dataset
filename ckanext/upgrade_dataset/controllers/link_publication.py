@@ -102,19 +102,29 @@ class LinkPublicationController():
         if package_name:
             package = toolkit.get_action('package_show')({}, {'name_or_id': package_name})
             Helper.check_access_edit_package(package['id'])
-            pubType = request.form.get('type')
-            title = request.form.get('title')
-            authors = request.form.get('author')
-            year = request.form.get('year')
-            publisher = request.form.get('publisher')
+            reference = {}
+            reference['ENTRYTYPE'] = request.form.get('type')
+            reference['title'] = request.form.get('title')
+            reference['author'] = request.form.get('author')
+            reference['year'] = request.form.get('year')
+            reference['publisher'] = request.form.get('publisher')
 
-            if pubType == 'article':
-                journal = request.form.get('journal')
-                vol = request.form.get('volume')
-                pages = request.form.get('page')
-                month = request.form.get('month')
+            if reference['ENTRYTYPE'] == 'article':
+                reference['journal'] = request.form.get('journal')
+                reference['volume'] = request.form.get('volume')
+                reference['pages'] = request.form.get('page')
+                reference['month'] = request.form.get('month')
 
-                return json.dumps([package_name, pubType, title, authors, year, publisher, journal, vol, pages, month])            
+            # elif reference['ENTRYTYPE'] in ['conference', 'inproceedings', 'proceedings']:
+            #     reference['booktitle']
+
+
+
+            
+            
+            
+            citation = Helper.create_citation(reference)
+            return citation
         
 
 
