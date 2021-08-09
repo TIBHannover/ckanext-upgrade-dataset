@@ -40,7 +40,7 @@ $(document).ready(function(){
     });
 
     $('#save-btn').click(function(){        
-        let form_validity = form_validator();
+        let form_validity = form_validator();        
         if(form_validity){
             send_data();
         }        
@@ -78,7 +78,7 @@ function form_validator(){
 
 function send_data(){
     var formdata = new FormData();
-    let pubType = $('#pub-type').select2('data').text;
+    let pubType = $('#pub-type').select2('data').text;    
     formdata.set('package', $('#package').val());
     formdata.set('type', pubType);
     formdata.set('title', $('#pub-title').val()); 
@@ -102,10 +102,11 @@ function send_data(){
 
     }
     else if (['conference', 'inproceedings', 'proceedings'].includes(pubType)){
-        let bookTitle = $('#conf-booktitle').val();
-        let series = $('#conf-series').val();
-        let address = $('#conf-address').val();
-        let pages = $('#conf-pages').val();
+        formdata.set('booktitle', $('#conf-booktitle').val());
+        formdata.set('series', $('#conf-series').val());
+        formdata.set('address', $('#conf-address').val());
+        formdata.set('pages', $('#conf-pages').val());
+        send_request(formdata);
 
     }
     else if (pubType == 'inbook'){

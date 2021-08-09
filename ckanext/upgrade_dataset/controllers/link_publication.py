@@ -115,8 +115,11 @@ class LinkPublicationController():
                 reference['pages'] = request.form.get('page')
                 reference['month'] = request.form.get('month')
 
-            # elif reference['ENTRYTYPE'] in ['conference', 'inproceedings', 'proceedings']:
-            #     reference['booktitle']
+            elif reference['ENTRYTYPE'] in ['conference', 'inproceedings', 'proceedings']:
+                reference['booktitle'] = request.form.get('booktitle')
+                reference['pages'] = request.form.get('pages')
+                reference['address'] = request.form.get('address')
+                reference['series'] = request.form.get('series')
 
 
 
