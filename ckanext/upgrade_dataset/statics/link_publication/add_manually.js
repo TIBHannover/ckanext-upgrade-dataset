@@ -95,10 +95,11 @@ function send_data(){
 
     }
     else if (pubType == 'techreport'){
-        let reportNumber = $('#report-number').val();
-        let institution = $('#report-ins').val();
-        let month = $('#report-month').select2('data').text;
-        let address = $('#report-address').val();
+        formdata.set('number', $('#report-number').val());
+        formdata.set('institutaion', $('#report-number').val());
+        formdata.set('month', $('#report-month').select2('data').text);
+        formdata.set('address', $('#report-address').val());
+        send_request(formdata);
 
     }
     else if (['conference', 'inproceedings', 'proceedings'].includes(pubType)){

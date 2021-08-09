@@ -120,6 +120,12 @@ class LinkPublicationController():
                 reference['pages'] = request.form.get('pages')
                 reference['address'] = request.form.get('address')
                 reference['series'] = request.form.get('series')
+            
+            if reference['ENTRYTYPE'] == 'techreport':
+                reference['number'] = request.form.get('number')
+                reference['institutaion'] = request.form.get('institutaion')
+                reference['address'] = request.form.get('address')
+                reference['month'] = request.form.get('month')
 
 
 
