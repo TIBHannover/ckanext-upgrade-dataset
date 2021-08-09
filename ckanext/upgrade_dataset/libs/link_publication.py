@@ -99,7 +99,7 @@ class Helper():
         reference = {}
         reference['ENTRYTYPE'] = request.form.get('type')
         reference['title'] = request.form.get('title')
-        reference['author'] = request.form.get('author')
+        reference['author'] = Helper.format_authors(request.form.get('author'))
         reference['year'] = request.form.get('year')
         reference['publisher'] = request.form.get('publisher')
 
@@ -144,6 +144,16 @@ class Helper():
             reference['doi'] = ''
 
         return reference
+
+
+
+    def format_authors(author_string):
+        if author_string:
+            if author_string[len(author_string) - 1] == ';':
+                author_string = author_string[:len(author_string) - 1]
+            return author_string.replace(';', ' and ')
+
+        return author_string
 
     
 
