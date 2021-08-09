@@ -353,8 +353,11 @@ class Helper():
 
     def create_table_row(meta_data, object_id):
         row = '<tr>'
-        row = row +  '<td>' +  meta_data['cite'] + '</td>'        
-        row = row +  '<td><a href="' +  meta_data['link'] + '" target="_blank">Link</a></td>'
+        row = row +  '<td>' +  meta_data['cite'] + '</td>'   
+        if meta_data['link'] and meta_data['link'] != '':      
+            row = row +  '<td><a href="' +  meta_data['link'] + '" target="_blank">Link</a></td>'
+        else:
+            row = row +  '<td>None</td>'
         row = row +  '<td>' +  Helper.create_delete_modal(object_id) + '</td>'  
         row = row +  '</tr>'
         return row
