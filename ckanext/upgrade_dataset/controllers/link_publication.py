@@ -133,13 +133,23 @@ class LinkPublicationController():
 
             elif reference['ENTRYTYPE'] == 'book':                           
                 reference['address'] = request.form.get('address')
-               
-
-
-
             
+            elif reference['ENTRYTYPE'] == 'incollection':
+                reference['booktitle'] = request.form.get('booktitle')
+                reference['pages'] = request.form.get('pages')
+                reference['address'] = request.form.get('address')
+                reference['editor'] = request.form.get('editor')
             
+            elif reference['ENTRYTYPE'] in ['masterthesis', 'phdthesis']:
+                reference['school'] = request.form.get('institutaion')
+                reference['address'] = request.form.get('address')
+                reference['month'] = request.form.get('month')
             
+            else:
+                reference['ENTRYTYPE'] = 'misc'
+                reference['doi'] = ''
+            
+
             citation = Helper.create_citation(reference)
             return citation
         

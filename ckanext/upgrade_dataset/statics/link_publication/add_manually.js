@@ -117,10 +117,11 @@ function send_data(){
 
     }
     else if (pubType == 'incollection'){
-        let editors = $('#incollecion-editor').val();
-        let address = $('#incollecion-address').val();
-        let pages = $('#incollecion-pages').val();
-        let bookTitle = $('#incollecion-booktitle').val();
+        formdata.set('editor', $('#incollecion-editor').val());
+        formdata.set('address', $('#incollecion-address').val());
+        formdata.set('pages', $('#incollecion-pages').val());
+        formdata.set('booktitle', $('#incollecion-booktite').val());
+        send_request(formdata);
 
     }
     else if (pubType == 'book'){
@@ -129,13 +130,14 @@ function send_data(){
 
     }
     else if (['masterthesis', 'phdthesis'].includes(pubType)){
-        let address = $('#thesis-address').val();
-        let month = $('#thesis-month').select2('data').text;
-        let school = $('#thesis-school').val();
+        formdata.set('address', $('#thesis-address').val());
+        formdata.set('month', $('#thesis-month').select2('data').text);
+        formdata.set('school', $('#thesis-school').val());
+        send_request(formdata);
 
     }
-    else{
-        // other types
+    else{        
+        send_request(formdata);
     }
 }
 
