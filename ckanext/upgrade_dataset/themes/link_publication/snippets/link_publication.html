@@ -1,5 +1,6 @@
 {% import 'macros/form.html' as macro %}
  {% set action = h.url_for('link_publication.save_doi', _external=True) %}
+ {% set action2 = h.url_for('link_publication.add_publication_manually', package_name=pkg_dict.name,  _external=True) %}
 
 <button type="button" class="btn btn-default" data-toggle="modal" data-target="#myModal">Link Reference</button>
 <input type="hidden" id="doi-validity-url" value={{h.url_for('link_publication.doi_is_valid', _external=True)}}>
@@ -12,15 +13,22 @@
         <h4 class="modal-title">Link a reference via the doi url</h4>
       </div>
       <div class="modal-body">  
-      <form id="doi-form" class="" method="post" action='{{action}}' data-module="basic-form" enctype="multipart/form-data">      
-        {{ macro.input('doi', 
-            id='doi', 
-            label=_('The doi URL'),                          
-            classes=['control-medium'] ,
-            placeholder="https://doi.org/xxxxx")
-        }}
-        <div id="doi_validation_message"></div>
-        <input type="hidden" name="package_id" value={{pkg_dict.id}}>
+        <b><i>
+          <p>{{_('You can link a reference by the DOI ID/URL. Alternatively, you can add the reference manually.')}}</p>
+        </i></b>
+        <br>
+        <form id="doi-form" class="" method="post" action='{{action}}' data-module="basic-form" enctype="multipart/form-data">      
+          {{ macro.input('doi', 
+              id='doi', 
+              label=_('The doi ID/URL'),                          
+              classes=['control-medium'] ,
+              placeholder="https://doi.org/xxxxx")
+          }}
+          <div id="doi_validation_message"></div>
+          <div id="add-manually-link-div">
+            <a href="{{action2}}"><i class="fa fa-plus"></i> Add Manually</a>
+          </div>
+          <input type="hidden" name="package_id" value={{pkg_dict.id}}>
       </div>
       <div class="modal-footer">
       </form>
