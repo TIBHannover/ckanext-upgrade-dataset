@@ -2,7 +2,7 @@ function formatState (state) {
     if (!state.id) {
       return $.trim(state.text);
     }    
-    let image_url = $('div[value="' + $.trim(state.text) + '"]').text(); 
+    let image_url = $("div[value='" + $.trim(state.text) + "']").text(); 
     if(image_url == 'None'){
       let $state = $.trim(state.text) + '<br><br>';
       return $state;
@@ -15,7 +15,6 @@ function formatState (state) {
 
 $(document).ready(function(){
     let cUrl = window.location.pathname;   
-    console.info(cUrl.includes('1368/ckan'));
     if (cUrl.includes('1368/ckan')){
       $('#add_new_machine_btn').attr('href', 'https://service.tib.eu/sfb1368/wiki/Equipment');
     }

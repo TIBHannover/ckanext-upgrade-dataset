@@ -2,7 +2,7 @@ function formatState (state) {
     if (!state.id) {
       return $.trim(state.text);
     }    
-    let image_url = $('div[value="' + $.trim(state.text) + '"]').text(); 
+    let image_url = $("div[value='" + $.trim(state.text) + "']").text(); 
     if(image_url == 'None'){
       let $state = $.trim(state.text) + '<br><br>';
       return $state;

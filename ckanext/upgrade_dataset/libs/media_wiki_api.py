@@ -11,13 +11,20 @@ class API():
     path = "/wiki/"
     scheme = "https"
     query = ""
+    target_sfb = ""
+    image_field = ""
 
 
-    def __init__(self, username, password, query, host):
+    def __init__(self, username, password, query, host, target_sfb):
         self.username = username
         self.password = password
         self.query = query
         self.host = host
+        self.target_sfb = target_sfb
+        if self.target_sfb == "1153":
+            self.image_field = "HasImage"
+        else:
+            self.image_field = "depiction"
     
 
     def pipeline(self):
@@ -30,8 +37,8 @@ class API():
                 print(answer)
                 processed_answer = self.unpack_ask_response(answer) 
                 results.append(processed_answer)                
-                if 'depiction' in processed_answer.keys():
-                    depiction_page =  processed_answer['depiction']
+                if self.image_field in processed_answer.keys():
+                    depiction_page =  processed_answer[self.image_field]
                     depiction_url = self.mw_getfile_url(filepage=depiction_page)                                        
                     machines_imageUrl[processed_answer['page']] = depiction_url                
         except:

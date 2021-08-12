@@ -68,8 +68,8 @@ class Helper():
         machines_list = []
         username = None
         password = None
-        credentials_path, smw_base_url, api_host = Helper.get_api_config()
-        query = "[[Category:Equipment]]|?hasManufacturer|?hasModel|?depiction"  # all Equipments (machines and tools)
+        query = ""
+        credentials_path, smw_base_url, api_host, query, sfb = Helper.get_api_config()          
         try:
             credentials = open(credentials_path, 'r').read()
             credentials = credentials.split('\n')
@@ -79,7 +79,7 @@ class Helper():
         except:
             return [[], []]
         
-        api_call = API(username=username, password=password, query=query, host=api_host)
+        api_call = API(username=username, password=password, query=query, host=api_host, target_sfb=sfb)
         results, machine_imageUrl = api_call.pipeline()
         if results and len(results) > 0:
             temp = {}
@@ -90,7 +90,12 @@ class Helper():
                 temp = {}
                 temp['value'] = smw_base_url + parse.quote(machine['page'])
                 temp['text'] = machine['page']
-                temp['image'] = machine_imageUrl.get( machine['page'])
+               # print('----------------------------------------------------------------------')
+               # print(machine_imageUrl.get( machine['page']))
+                if machine_imageUrl.get( machine['page']):
+                    temp['image'] = machine_imageUrl.get( machine['page'])
+                else:
+                    temp['image'] = ''
                 machines_list.append(temp)
                         
             return [machines_list, machine_imageUrl]
@@ -102,13 +107,17 @@ class Helper():
         credential_path = '/etc/ckan/default/credentials/smw1153.txt'
         smw_base_url = "https://service.tib.eu/sfb1153/wiki/"
         api_host = "service.tib.eu/sfb1153"
+        query = "[[Category:Device]]|?HasManufacturer|?HasImage|?HasType"
+        sfb = "1153"
         ckan_root_path = toolkit.config.get('ckan.root_path')
         if  ckan_root_path and 'sfb1368/ckan' in ckan_root_path:
             credential_path = '/etc/ckan/default/credentials/smw1368.txt'
             smw_base_url = "https://service.tib.eu/sfb1368/wiki/"
             api_host = "service.tib.eu/sfb1368"
+            query = "[[Category:Equipment]]|?hasManufacturer|?hasModel|?depiction"
+            sfb = "1368"
 
-        return [credential_path, smw_base_url, api_host]
+        return [credential_path, smw_base_url, api_host, query, sfb]
     
 
 
