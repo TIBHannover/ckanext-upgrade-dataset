@@ -1,12 +1,12 @@
 # encoding: utf-8
 
-from werkzeug.datastructures import Headers
-from ckanext.upgrade_dataset import model
-from flask.globals import request
+from sqlalchemy.sql.expression import false, null
 import ckan.plugins.toolkit as toolkit
-import urllib.request, json 
+import urllib.request
 import ckan.lib.helpers as h
 import bibtexparser
+from ckanext.upgrade_dataset.model.package_publication_link import PackagePublicationLink
+from datetime import datetime
 
 
 Base_doi_api_url = "http://dx.doi.org/"
@@ -21,7 +21,8 @@ class Helper():
             return True
 
         except toolkit.NotAuthorized:
-            toolkit.abort(403, 'You are not authorized to access this function')
+            return False
+            # toolkit.abort(403, 'You are not authorized to access this function')
 
 
     def parse_doi_id(url):
@@ -48,8 +49,7 @@ class Helper():
             return None
 
 
-    def process_doi_link(doi_link):
-               
+    def process_doi_link(doi_link):               
         try:            
             doi_id = Helper.parse_doi_id(doi_link)
             dest_url = Base_doi_api_url + doi_id
@@ -57,15 +57,156 @@ class Helper():
             if response:                        
                 processed_result = {}
                 processed_result['cite'] = Helper.create_citation(response)
-                return processed_result
-            
+                return processed_result            
             else:
-                return None
-        
+                return None        
         except:
             return None
     
+
+    '''
+        fill null citations for a dataset
+    '''
+    def fill_null_citation(package):
+        try:
+            res_object = PackagePublicationLink(package_name=package)
+            result = res_object.get_by_package(name=package)
+            if result == false:
+                return False
+
+            for source in result:                        
+                if not source.citation or source.citation == null:
+                    source.citation = Helper.process_doi_link(source.doi).get('cite')
+                    source.commit()
+        except:
+            return False
+
+        return True
+
+
+
+    def check_doi_validity(doi_url):        
+        doi = Helper.parse_doi_id(doi_url)
+        if not doi:
+            return 'url not vaid'
+        dest_url = Base_doi_api_url + doi
+        response = Helper.call_api(dest_url)
+        if response:
+            return True
+
+        return None
+
+    def process_publication_manual_metadata(request):
+        reference = {}
+        reference['ENTRYTYPE'] = request.form.get('type')
+        reference['title'] = request.form.get('title')
+        reference['author'] = Helper.format_authors(request.form.get('author'))
+        reference['year'] = request.form.get('year')
+        reference['publisher'] = request.form.get('publisher')
+
+        if reference['ENTRYTYPE'] == 'article':
+            reference['journal'] = request.form.get('journal')
+            reference['volume'] = request.form.get('volume')
+            reference['pages'] = request.form.get('page')
+            reference['month'] = request.form.get('month')
+
+        elif reference['ENTRYTYPE'] in ['conference', 'inproceedings', 'proceedings']:
+            reference['booktitle'] = request.form.get('booktitle')
+            reference['pages'] = request.form.get('pages')
+            reference['address'] = request.form.get('address')
+            reference['series'] = request.form.get('series')
+        
+        elif reference['ENTRYTYPE'] == 'techreport':
+            reference['number'] = request.form.get('number')
+            reference['institutaion'] = request.form.get('institutaion')
+            reference['address'] = request.form.get('address')
+            reference['month'] = request.form.get('month')
+        
+        elif reference['ENTRYTYPE'] == 'inbook':
+            reference['pages'] = request.form.get('pages')                
+            reference['address'] = request.form.get('address')
+
+        elif reference['ENTRYTYPE'] == 'book':                           
+            reference['address'] = request.form.get('address')
+        
+        elif reference['ENTRYTYPE'] == 'incollection':
+            reference['booktitle'] = request.form.get('booktitle')
+            reference['pages'] = request.form.get('pages')
+            reference['address'] = request.form.get('address')
+            reference['editor'] = request.form.get('editor')
+        
+        elif reference['ENTRYTYPE'] in ['masterthesis', 'phdthesis']:
+            reference['school'] = request.form.get('institutaion')
+            reference['address'] = request.form.get('address')
+            reference['month'] = request.form.get('month')
+        
+        else:
+            reference['ENTRYTYPE'] = 'misc'
+            reference['doi'] = ''
+
+        return reference
+
+
+
+    def format_authors(author_string):
+        if author_string:
+            if author_string[len(author_string) - 1] == ';':
+                author_string = author_string[:len(author_string) - 1]
+            return author_string.replace(';', ' and ')
+
+        return author_string
+
     
+
+    def get_publication_types_dropdown_content():
+        publication_types = []
+        Types = ['',
+            'article', 
+            'conference', 
+            'inproceedings', 
+            'proceedings', 
+            'inbook', 
+            'incollection', 
+            'book', 
+            'masterthesis', 
+            'phdthesis',
+            'techreport',
+            'Other'
+            ]        
+        for t in Types:
+            temp = {}
+            temp['value'] = t
+            temp['text'] = t
+            publication_types.append(temp)
+
+        return publication_types
+
+    
+    def get_years_list():
+        years = []        
+        current_year = datetime.now().year
+        for i in list(reversed(range(1900, current_year + 1))):
+            temp = {}
+            temp['value'] = i
+            temp['text'] = i
+            years.append(temp)
+        return years
+
+    
+    def get_month_list():
+        months = []
+        texts = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December']
+        values = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']
+        for i in range(0, 12):
+            temp = {}
+            temp['value'] = values[i]
+            temp['text'] = texts[i]
+            months.append(temp)
+
+        return months
+
+
+
     def create_citation(response):
         citation_text = ""
 
@@ -211,25 +352,19 @@ class Helper():
     
 
 
-    def create_table_row(meta_data, object_id):
+    def create_table_row(meta_data, object_id, is_auth_to_delete):
         row = '<tr>'
-        row = row +  '<td>' +  meta_data['cite'] + '</td>'        
-        row = row +  '<td><a href="' +  meta_data['link'] + '" target="_blank">Link</a></td>'
-        row = row +  '<td>' +  Helper.create_delete_modal(object_id) + '</td>'  
+        row = row +  '<td>' +  meta_data['cite'] + '</td>'   
+        if meta_data['link'] and meta_data['link'] != '':      
+            row = row +  '<td><a href="' +  meta_data['link'] + '" target="_blank">Link</a></td>'
+        else:
+            row = row +  '<td>None</td>'
+       
+        if is_auth_to_delete:
+            row = row +  '<td>' +  Helper.create_delete_modal(object_id) + '</td>'  
         row = row +  '</tr>'
         return row
     
-
-    def check_doi_validity(doi_url):        
-        doi = Helper.parse_doi_id(doi_url)
-        if not doi:
-            return 'url not vaid'
-        dest_url = Base_doi_api_url + doi
-        response = Helper.call_api(dest_url)
-        if response:
-            return True
-
-        return None
 
 
     def create_delete_modal(object_id):

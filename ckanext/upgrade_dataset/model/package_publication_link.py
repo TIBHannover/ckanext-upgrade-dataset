@@ -16,13 +16,15 @@ package_publication_link_table = Table(
     Column(u"package_name", _types.UnicodeText, ForeignKey(u"package.name"), nullable=False),
     Column(u"doi", _types.UnicodeText, nullable=False),    
     Column(u"create_at", _types.DateTime, default=datetime.datetime.utcnow, nullable=False),
+    Column(u"citation", _types.UnicodeText),
 )
 
 class PackagePublicationLink(domain_object.DomainObject):
-    def __init__(self, package_name=None, doi=None, create_at=None):
+    def __init__(self, package_name=None, doi=None, create_at=None, citation=None):
         self.package_name = package_name
         self.doi = doi        
         self.create_at = create_at
+        self.citation = citation
 
     
     @classmethod

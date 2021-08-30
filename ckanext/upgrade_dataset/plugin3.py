@@ -47,4 +47,18 @@ class LinkPublicationPlugin(plugins.SingletonPlugin):
             methods=['GET']
         )
 
+        blueprint.add_url_rule(
+            u'/upgrade_dataset/add_publication_manually/<package_name>',
+            u'add_publication_manually',
+            LinkPublicationController.add_publication_manually,
+            methods=['GET']
+        )
+
+        blueprint.add_url_rule(
+            u'/upgrade_dataset/save_publication_manually',
+            u'save_publication_manually',
+            LinkPublicationController.save_publication_manually,
+            methods=['POST']
+        )
+
         return blueprint

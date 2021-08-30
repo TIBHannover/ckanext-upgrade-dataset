@@ -1,12 +1,13 @@
 # encoding: utf-8
 
-from flask import redirect, request
-from sqlalchemy.sql.expression import false
+from flask import redirect, request, render_template
+from sqlalchemy.sql.expression import false, null
 import ckan.lib.helpers as h
 import ckan.plugins.toolkit as toolkit
 from ckanext.upgrade_dataset.model import PackagePublicationLink
 from datetime import datetime as _time
 from ckanext.upgrade_dataset.libs.link_publication import Helper
+import json
 
 
 
@@ -15,13 +16,16 @@ class LinkPublicationController():
     def save_doi():
         package_id = request.form.get('package_id')       
         doi = request.form.get('doi')       
-        Helper.check_access_edit_package(package_id)
+        if not Helper.check_access_edit_package(package_id):
+            toolkit.abort(403, 'You are not authorized to access this function')
 
         if package_id and doi and Helper.check_doi_validity(doi) == True:
             package = toolkit.get_action('package_show')({}, {'name_or_id': package_id})
             try:
-                record = PackagePublicationLink(package_name=package['name'], doi=doi, create_at = _time.now())
-                record.save()
+                citation = Helper.process_doi_link(doi)
+                if citation:
+                    record = PackagePublicationLink(package_name=package['name'], doi=doi, create_at = _time.now(), citation=citation.get('cite'))
+                    record.save()
                 return  redirect(h.url_for('dataset.read', id=str(package_id) ,  _external=True))   
             except:
                 return toolkit.abort(403, "bad request")
@@ -32,16 +36,21 @@ class LinkPublicationController():
 
 
     def get_publication(name):        
+        Helper.fill_null_citation(name)
         res_object = PackagePublicationLink(package_name=name)
+        package = toolkit.get_action('package_show')({}, {'name_or_id': name})
         result = res_object.get_by_package(name=name)
         return_rows = ""
         if result == false:
             return '0'
         for source in result:
-            meta_data = Helper.process_doi_link(source.doi)
+            if not source.citation:
+                continue
+            meta_data = {}
+            meta_data['cite'] = source.citation
             if meta_data:
                 meta_data['link'] = source.doi
-                return_rows += Helper.create_table_row(meta_data, source.id)
+                return_rows += Helper.create_table_row(meta_data, source.id, Helper.check_access_edit_package(package['id']))
         
         if return_rows != "":
             return return_rows
@@ -66,7 +75,8 @@ class LinkPublicationController():
         doi_obj = res_object.get_by_id(id=doi_id)
         package_name = doi_obj.package_name
         package = toolkit.get_action('package_show')({}, {'name_or_id': package_name})
-        Helper.check_access_edit_package(package['id'])
+        if not Helper.check_access_edit_package(package['id']):
+            toolkit.abort(403, 'You are not authorized to access this function')
         try:            
             doi_obj.delete()
             doi_obj.commit()
@@ -74,3 +84,42 @@ class LinkPublicationController():
 
         except:
             return toolkit.abort(403, "bad request")
+    
+
+    def add_publication_manually(package_name):
+        package = toolkit.get_action('package_show')({}, {'name_or_id': package_name})
+        publication_types = Helper.get_publication_types_dropdown_content()
+        years = Helper.get_years_list()
+        months = Helper.get_month_list()
+
+        return render_template('add_manually.html', 
+            pkg_dict=package, 
+            publication_types=publication_types,
+            years=years,
+            months=months
+            )
+    
+
+    def save_publication_manually():
+        try:
+            package_name = request.form.get('package')
+            package = toolkit.get_action('package_show')({}, {'name_or_id': package_name})
+            if request.form.get('cancel'):
+                return h.url_for('dataset.read', id=str(package['id']) ,  _external=True)
+                
+            if package_name:                
+                Helper.check_access_edit_package(package['id'])
+                reference = Helper.process_publication_manual_metadata(request)
+                citation = Helper.create_citation(reference)
+                if citation != "":
+                    record = PackagePublicationLink(package_name=package_name, doi='', create_at = _time.now(), citation=citation)
+                    record.save()                    
+
+                return h.url_for('dataset.read', id=str(package['id']) ,  _external=True)
+
+            else:
+                toolkit.abort(403, "package not specefied")
+            
+        except:
+            toolkit.abort(500, "We cannot process your request at this moment")
+
