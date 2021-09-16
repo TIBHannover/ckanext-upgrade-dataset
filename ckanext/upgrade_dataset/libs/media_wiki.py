@@ -90,8 +90,6 @@ class Helper():
                 temp = {}
                 temp['value'] = smw_base_url + parse.quote(machine['page'])
                 temp['text'] = machine['page']
-               # print('----------------------------------------------------------------------')
-               # print(machine_imageUrl.get( machine['page']))
                 if machine_imageUrl.get( machine['page']):
                     temp['image'] = machine_imageUrl.get( machine['page'])
                 else:
