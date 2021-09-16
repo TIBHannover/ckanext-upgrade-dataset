@@ -30,19 +30,20 @@ class API():
     def pipeline(self):
         results = []
         machines_imageUrl = {}
+        self.login(self.host, self.path, self.scheme)
         try:            
             self.login(self.host, self.path, self.scheme)
             raw_results = self.site.ask(self.query)                            
             for answer in raw_results:
-                print(answer)
-                processed_answer = self.unpack_ask_response(answer) 
-                results.append(processed_answer)                
-                if self.image_field in processed_answer.keys():
-                    depiction_page =  processed_answer[self.image_field]
-                    depiction_url = self.mw_getfile_url(filepage=depiction_page)                                        
-                    machines_imageUrl[processed_answer['page']] = depiction_url                
+                if answer and answer['printouts']:
+                    processed_answer = self.unpack_ask_response(answer) 
+                    results.append(processed_answer)                
+                    if self.image_field in processed_answer.keys():
+                        depiction_page =  processed_answer[self.image_field]
+                        depiction_url = self.mw_getfile_url(filepage=depiction_page)                                        
+                        machines_imageUrl[processed_answer['page']] = depiction_url                
         except:
-            return None
+            return [[], {}]
 
         return [results, machines_imageUrl]
 
@@ -81,6 +82,8 @@ class API():
     def mw_getfile_url(self, filepage):
         filepage = filepage.replace('File:', '')
         f = self.site.images[filepage]
-        imageinfo = f.imageinfo        
-        file_url = imageinfo['url']
+        imageinfo = f.imageinfo 
+        file_url = ""
+        if 'url' in imageinfo.keys():       
+            file_url = imageinfo['url']
         return file_url
