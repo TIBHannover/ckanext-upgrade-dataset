@@ -1,9 +1,0 @@
-{% ckan_extends %}
-
-
-{% block package_additional_info %}
-    <br>
-    {% snippet "snippets/publication_info.html", pkg_dict=pkg %}
-    <br>
-    {{ super() }}
-{% endblock %}
