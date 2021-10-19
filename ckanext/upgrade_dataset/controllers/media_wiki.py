@@ -100,4 +100,10 @@ class MediaWikiController():
         if record == false or record.url == '0':
             return '0'
         return json.dumps([record.url, record.link_name])
+    
+    
+    def cancel_dataset_plugin_is_enabled():
+        if Helper.check_plugin_enabled('cancel_dataset_creation'):
+            return True
+        return False
 

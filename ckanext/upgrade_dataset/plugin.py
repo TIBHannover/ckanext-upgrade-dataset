@@ -7,6 +7,7 @@ from ckanext.upgrade_dataset.controllers.media_wiki import MediaWikiController
 class MediaWikiLinkPlugin(plugins.SingletonPlugin):
     plugins.implements(plugins.IConfigurer)
     plugins.implements(plugins.IBlueprint)
+    plugins.implements(plugins.ITemplateHelpers)
 
     # IConfigurer
 
@@ -58,3 +59,6 @@ class MediaWikiLinkPlugin(plugins.SingletonPlugin):
             )
 
         return blueprint
+    
+    def get_helpers(self):
+        return {'cancel_dataset_is_enabled': MediaWikiController.cancel_dataset_plugin_is_enabled}
