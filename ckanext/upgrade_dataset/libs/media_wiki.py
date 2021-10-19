@@ -118,5 +118,12 @@ class Helper():
         return [credential_path, smw_base_url, api_host, query, sfb]
     
 
+    def check_plugin_enabled(plugin_name):
+        plugins = toolkit.config.get("ckan.plugins")
+        if plugin_name in plugins:
+            return True
+        return False
+    
+
 
 
