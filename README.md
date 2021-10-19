@@ -35,7 +35,7 @@ To install ckanext-upgrade-dataset:
    config file (by default the config file is located at
    `/etc/ckan/default/ckan.ini`).
 
-4. (For `media_wiki`) Upgrade the CKAN database to add the plugin table:
+4. Upgrade the CKAN database to add the plugin table:
 
         ckan -c /etc/ckan/default/ckan.ini db upgrade -p media_wiki
 
